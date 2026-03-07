@@ -7,21 +7,134 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
-<body class="bg-gray-100">
-    <nav class="bg-blue-600 text-white p-4">
-        <div class="container mx-auto">
-            <h1 class="text-2xl font-bold">GMT Repack</h1>
-            <div class="flex space-x-4 mt-2 md:mt-0">
-                <a href="{% url 'home' %}" class="hover:bg-blue-700 px-3 py-2 rounded">Home</a>
-                <a href="{% url 'hr:dashboard' %}" class="hover:bg-blue-700 px-3 py-2 rounded">HR</a>
-                <a href="{% url 'production:dashboard' %}" class="hover:bg-blue-700 px-3 py-2 rounded">Production</a>
-                <a href="{% url 'warehouse:dashboard' %}" class="hover:bg-blue-700 px-3 py-2 rounded">Warehouse</a>
-                <a href="{% url 'admin:index' %}" class="hover:bg-blue-700 px-3 py-2 rounded">Admin</a>
+<body class="bg-gray-100 font-sans antialiased">
+    <!-- Sidebar -->
+    {% block sidebar %}
+    <aside class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-gray-900 text-gray-300" id="sidebar">
+        <div class="h-full flex flex-col">
+            <!-- Logo / App Name -->
+            <div class="flex items-center justify-between h-16 px-4 border-b border-gray-700">
+                <span class="text-xl font-semibold text-white">GMT Repack</span>
+                <button class="sm:hidden text-gray-400 hover:text-white focus:outline-none" id="closeSidebar">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto py-4 px-3">
+                <a href="{% url 'home' %}" class="flex items-center px-4 py-2 text-sm rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 {% if request.path == '/' %}bg-gray-700 text-white{% endif %}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="{% url 'hr:dashboard' %}" class="flex items-center px-4 py-2 text-sm rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 {% if '/hr/' in request.path %}bg-gray-700 text-white{% endif %}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    HR
+                </a>
+                <a href="{% url 'production:dashboard' %}" class="flex items-center px-4 py-2 text-sm rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 {% if '/production/' in request.path %}bg-gray-700 text-white{% endif %}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                    </svg>
+                    Production
+                </a>
+                <a href="{% url 'warehouse:dashboard' %}" class="flex items-center px-4 py-2 text-sm rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 {% if '/warehouse/' in request.path %}bg-gray-700 text-white{% endif %}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                    </svg>
+                    Warehouse
+                </a>
+                <a href="{% url 'admin:index' %}" class="flex items-center px-4 py-2 text-sm rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Admin
+                </a>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="border-t border-gray-700 p-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm">
+                        {% if user.is_authenticated %}
+                            {{ user.first_name|first|default:user.username|first|upper }}
+                        {% else %}
+                            G
+                        {% endif %}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-white truncate">
+                            {% if user.is_authenticated %}
+                                {{ user.get_full_name|default:user.username }}
+                            {% else %}
+                                Guest
+                            {% endif %}
+                        </p>
+                        <p class="text-xs text-gray-400 truncate">
+                            {% if user.is_authenticated %}
+                                {{ user.employee_profile.role|default:"Staff"|title }}
+                            {% else %}
+                                Not logged in
+                            {% endif %}
+                        </p>
+                    </div>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="text-gray-400 hover:text-white">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    </nav>
-    <main class="container mx-auto p-4">
-        {% block content %}{% endblock %}
-    </main>
+    </aside>
+    {% endblock %}
+
+    <!-- Main Content -->
+    {% block main_area %}
+    <div class="sm:ml-64 flex flex-col min-h-screen">
+        <!-- Mobile menu button -->
+        <div class="sm:hidden fixed top-4 left-4 z-50">
+            <button class="bg-gray-900 text-white p-2 rounded-md focus:outline-none" id="openSidebar">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Page Content -->
+        <main class="flex-1 p-4 md:p-6 lg:p-8">
+            <div class="max-w-7xl mx-auto">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    {% endblock %}
+
+    <script>
+        // Sidebar toggle for mobile
+        const sidebar = document.getElementById('sidebar');
+        const openBtn = document.getElementById('openSidebar');
+        const closeBtn = document.getElementById('closeSidebar');
+
+        if (openBtn) {
+            openBtn.addEventListener('click', () => {
+                sidebar.classList.remove('-translate-x-full');
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+            });
+        }
+    </script>
 </body>
 </html>

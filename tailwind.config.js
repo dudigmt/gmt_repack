@@ -4,7 +4,17 @@ module.exports = {
     './templates/**/*.html',
     './core/templates/**/*.html',
     './apps/**/templates/**/*.html',
-    './**/*.py',  // optional: untuk mendeteksi class di Python strings
+  ],
+  safelist: [
+    'max-w-7xl',
+    'mx-auto',
+    'w-full',
+    'px-4',
+    'md:px-6',
+    'lg:px-8',
+    'py-4',
+    'md:py-6',
+    'lg:py-8',
   ],
   theme: {
     extend: {},

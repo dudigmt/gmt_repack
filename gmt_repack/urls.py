@@ -24,4 +24,5 @@ urlpatterns = [
     path('hr/', include('apps.hr.urls')),
     path('production/', include('apps.production.urls')),
     path('warehouse/', include('apps.warehouse.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
