@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Production Dashboard{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Production Dashboard</h2>
+    
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+            <h3 class="text-sm font-medium text-green-800">Total Work Orders</h3>
+            <p class="text-3xl font-bold text-green-600">{{ total_work_orders }}</p>
+        </div>
+        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <h3 class="text-sm font-medium text-blue-800">Production Lines</h3>
+            <p class="text-3xl font-bold text-blue-600">{{ total_production_lines }}</p>
+        </div>
+        <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <h3 class="text-sm font-medium text-purple-800">Production Logs</h3>
+            <p class="text-3xl font-bold text-purple-600">{{ total_logs }}</p>
+        </div>
+    </div>
+    
+    <!-- Quantity Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Ordered</h3>
+            <p class="text-3xl font-bold text-gray-800">{{ total_ordered|floatformat:0 }}</p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Produced</h3>
+            <p class="text-3xl font-bold text-gray-800">{{ total_produced|floatformat:0 }}</p>
+        </div>
+    </div>
+    
+    <!-- Work Orders by Status -->
+    <div class="mb-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Work Orders by Status</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {% for status in work_orders_by_status %}
+            <div class="bg-gray-50 p-3 rounded-lg text-center">
+                <span class="block text-sm font-medium text-gray-600">{{ status.status|title }}</span>
+                <span class="block text-xl font-bold text-gray-800">{{ status.count }}</span>
+            </div>
+            {% empty %}
+            <p class="text-gray-500">No data available.</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Production by Line -->
+    <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Production by Line</h3>
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead>
+                    <tr>
+                        <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Line</th>
+                        <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Work Orders</th>
+                        <th class="text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Produced</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for line in production_by_line %}
+                    <tr>
+                        <td class="py-2 text-sm text-gray-900">{{ line.name }}</td>
+                        <td class="py-2 text-sm text-gray-900">{{ line.wo_count|default:0 }}</td>
+                        <td class="py-2 text-sm text-gray-900">{{ line.total_produced|default:0|floatformat:0 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="py-2 text-sm text-gray-500 text-center">No data available.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

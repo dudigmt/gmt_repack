@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Welcome to GMT Repack</h2>
+    <p class="text-gray-600">This is a dashboard page styled with TailwindCSS.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <div class="bg-blue-100 p-4 rounded-lg">
+            <h3 class="font-semibold text-blue-800">HR Module</h3>
+            <p class="text-sm text-blue-600">Manage employees, departments, positions</p>
+        </div>
+        <div class="bg-green-100 p-4 rounded-lg">
+            <h3 class="font-semibold text-green-800">Production Module</h3>
+            <p class="text-sm text-green-600">Track work orders and production lines</p>
+        </div>
+        <div class="bg-purple-100 p-4 rounded-lg">
+            <h3 class="font-semibold text-purple-800">Warehouse Module</h3>
+            <p class="text-sm text-purple-600">Manage inventory and stock movements</p>
+        </div>
+    </div>
+    <div class="mt-4 p-3 bg-yellow-50 border-l-4 border-yellow-400">
+        <p class="text-yellow-700">TailwindCSS is successfully integrated!</p>
+    </div>
+</div>
+{% endblock %}

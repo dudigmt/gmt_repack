@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}HR Dashboard{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">HR Dashboard</h2>
+    
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <h3 class="text-sm font-medium text-blue-800">Total Employees</h3>
+            <p class="text-3xl font-bold text-blue-600">{{ total_employees }}</p>
+        </div>
+        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+            <h3 class="text-sm font-medium text-green-800">Departments</h3>
+            <p class="text-3xl font-bold text-green-600">{{ total_departments }}</p>
+        </div>
+        <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <h3 class="text-sm font-medium text-purple-800">Positions</h3>
+            <p class="text-3xl font-bold text-purple-600">{{ total_positions }}</p>
+        </div>
+    </div>
+    
+    <!-- Employees by Department -->
+    <div class="mb-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Employees by Department</h3>
+        <div class="bg-gray-50 p-4 rounded-lg">
+            {% for dept in employees_by_dept %}
+            <div class="flex items-center mb-2">
+                <span class="w-1/3 text-gray-600">{{ dept.name }}</span>
+                <div class="w-2/3 bg-gray-200 rounded-full h-4">
+                    <div class="bg-blue-500 h-4 rounded-full" style="width: {% widthratio dept.emp_count total_employees 100 %}%"></div>
+                </div>
+                <span class="ml-2 text-sm text-gray-600">{{ dept.emp_count }}</span>
+            </div>
+            {% empty %}
+            <p class="text-gray-500">No data available.</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Employees by Status -->
+    <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Employees by Status</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {% for status in employees_by_status %}
+            <div class="bg-gray-50 p-3 rounded-lg text-center">
+                <span class="block text-sm font-medium text-gray-600">{{ status.employment_status|title }}</span>
+                <span class="block text-xl font-bold text-gray-800">{{ status.count }}</span>
+            </div>
+            {% empty %}
+            <p class="text-gray-500">No data available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
