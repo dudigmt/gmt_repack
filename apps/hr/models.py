@@ -47,8 +47,7 @@ class Employee(models.Model):
 
     GENDER = (
         ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
+        ('F', 'Female'),        
     )
 
     ROLE_CHOICES = (
