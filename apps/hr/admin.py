@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import Department, Position, Employee
 
 @admin.register(Department)
@@ -14,7 +15,7 @@ class PositionAdmin(admin.ModelAdmin):
     search_fields = ['title', 'code']
 
 @admin.register(Employee)
-class EmployeeAdmin(admin.ModelAdmin):
+class EmployeeAdmin(ModelAdmin):
     list_display = ['employee_id', 'nama', 'gender', 'department', 'position', 'status_karyawan', 'tgl_rekrut']
     list_filter = ['status_karyawan', 'gender', 'agama', 'gol_darah', 'department', 'position']
     search_fields = ['employee_id', 'nama', 'no_ktp', 'no_hp', 'no_npwp']

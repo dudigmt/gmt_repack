@@ -29,7 +29,7 @@
             </form>
         </div>
     </div>
-
+    
     <script>
         function showImportModal() {
             document.getElementById('importModal').style.display = 'block';
@@ -44,6 +44,34 @@
             var modal = document.getElementById('importModal');
             if (event.target == modal) {
                 modal.style.display = 'none';
+            }
+        }
+
+        function showImportModal() {
+            document.getElementById('importModal').style.display = 'block';
+        }
+        
+        function hideImportModal() {
+            document.getElementById('importModal').style.display = 'none';
+        }
+        
+        function showCreateUserModal() {
+            document.getElementById('createUserModal').style.display = 'block';
+        }
+        
+        function hideCreateUserModal() {
+            document.getElementById('createUserModal').style.display = 'none';
+        }
+        
+        // Tutup modal jika klik di luar
+        window.onclick = function(event) {
+            var importModal = document.getElementById('importModal');
+            var userModal = document.getElementById('createUserModal');
+            if (event.target == importModal) {
+                importModal.style.display = 'none';
+            }
+            if (event.target == userModal) {
+                userModal.style.display = 'none';
             }
         }
     </script>
