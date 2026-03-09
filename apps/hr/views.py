@@ -1,18 +1,19 @@
-from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.management import call_command
+from django.core.paginator import Paginator
+from django.db.models import Count
 from django.conf import settings
+from .models import Employee, Department, Position
 import os
 import tempfile
 
 def dashboard(request):
-    # Dummy data / agregasi dari database
     total_employees = Employee.objects.count()
     total_departments = Department.objects.count()
     total_positions = Position.objects.count()
     
-    # Data untuk chart/statistik sederhana
     employees_by_dept = Department.objects.annotate(emp_count=Count('employees')).values('name', 'emp_count')
     employees_by_status = Employee.objects.values('employment_status').annotate(count=Count('id'))
     
@@ -53,3 +54,10 @@ def import_employees_view(request):
         return redirect('admin:hr_employee_changelist')
     
     return redirect('admin:hr_employee_changelist')
+
+def employee_list(request):
+    employees = Employee.objects.all().order_by('employee_id')
+    paginator = Paginator(employees, 25)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'hr/employee_list.html', {'page_obj': page_obj})
