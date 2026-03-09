@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from core import views
+from apps.hr.views import import_employees_view
 
 urlpatterns = [
+    path('admin/hr/employee/import-excel/', import_employees_view, name='import-employees'),
     path('admin/', admin.site.urls),
     path('', views.dashboard, name='home'),
     path('hr/', include('apps.hr.urls')),
     path('production/', include('apps.production.urls')),
     path('warehouse/', include('apps.warehouse.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),    
 ]
