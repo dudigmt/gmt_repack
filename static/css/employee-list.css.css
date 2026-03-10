@@ -1,0 +1,463 @@
+/* ==========================================================================
+   EMPLOYEE LIST - GMT Repack
+   Desain modern dengan sentuhan glassmorphism dan animasi halus
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Container & Layout
+   -------------------------------------------------------------------------- */
+.employee-container {
+    @apply max-w-7xl mx-auto;
+}
+
+/* --------------------------------------------------------------------------
+   Statistik Cards - Glassmorphism dengan efek hover
+   -------------------------------------------------------------------------- */
+.stat-card {
+    @apply relative overflow-hidden rounded-xl p-6 transition-all duration-300;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .stat-card {
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.dark .stat-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+}
+
+.stat-icon {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center text-white;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.stat-icon-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.stat-icon-green {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-icon-yellow {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.stat-icon-red {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+/* --------------------------------------------------------------------------
+   Search & Filter Section
+   -------------------------------------------------------------------------- */
+.search-wrapper {
+    @apply relative;
+}
+
+.search-input {
+    @apply w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-300;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-color: rgba(209, 213, 219, 0.5);
+}
+
+.dark .search-input {
+    background: rgba(31, 41, 55, 0.7);
+    border-color: rgba(75, 85, 99, 0.5);
+    color: #f3f4f6;
+}
+
+.search-input:focus {
+    @apply outline-none ring-2 ring-blue-500 border-transparent;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.dark .search-input:focus {
+    background: rgba(31, 41, 55, 0.95);
+}
+
+.search-icon {
+    @apply absolute left-4 top-3.5 text-gray-400 transition-colors duration-300;
+}
+
+.search-input:focus + .search-icon {
+    @apply text-blue-500;
+}
+
+.filter-chip {
+    @apply px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(209, 213, 219, 0.5);
+}
+
+.dark .filter-chip {
+    background: rgba(31, 41, 55, 0.7);
+    border-color: rgba(75, 85, 99, 0.5);
+    color: #f3f4f6;
+}
+
+.filter-chip:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: #3b82f6;
+}
+
+.dark .filter-chip:hover {
+    background: rgba(31, 41, 55, 0.9);
+}
+
+.filter-chip.active {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border-color: transparent;
+}
+
+.filter-chip.active:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+/* --------------------------------------------------------------------------
+   View Toggle (Table / Grid)
+   -------------------------------------------------------------------------- */
+.view-toggle {
+    @apply inline-flex rounded-xl p-1;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(209, 213, 219, 0.5);
+}
+
+.dark .view-toggle {
+    background: rgba(31, 41, 55, 0.7);
+    border-color: rgba(75, 85, 99, 0.5);
+}
+
+.view-toggle-btn {
+    @apply px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2;
+}
+
+.view-toggle-btn.active {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+/* --------------------------------------------------------------------------
+   Table Styles - Modern dengan efek depth
+   -------------------------------------------------------------------------- */
+.table-container {
+    @apply rounded-xl overflow-hidden border transition-all duration-300;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-color: rgba(209, 213, 219, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .table-container {
+    background: rgba(17, 24, 39, 0.7);
+    border-color: rgba(75, 85, 99, 0.5);
+}
+
+.table-header {
+    @apply px-6 py-4 text-left text-xs font-medium uppercase tracking-wider;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+}
+
+.dark .table-header {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+}
+
+.table-row {
+    @apply transition-all duration-300;
+}
+
+.table-row:hover {
+    background: rgba(59, 130, 246, 0.05);
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dark .table-row:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Grid/Card View
+   -------------------------------------------------------------------------- */
+.employee-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+}
+
+.employee-card {
+    @apply relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(209, 213, 219, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .employee-card {
+    background: rgba(17, 24, 39, 0.7);
+    border-color: rgba(75, 85, 99, 0.5);
+}
+
+.employee-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    @apply h-24 relative overflow-hidden;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.card-avatar {
+    @apply absolute -bottom-10 left-6 w-20 h-20 rounded-xl border-4 flex items-center justify-center text-2xl font-bold text-white;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    @apply pt-12 p-6;
+}
+
+.card-badge {
+    @apply px-3 py-1 rounded-lg text-xs font-semibold;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Hover Card Preview
+   -------------------------------------------------------------------------- */
+.hover-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.hover-preview {
+    position: fixed;
+    z-index: 9999;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.dark .hover-preview {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.hover-card:hover .hover-preview {
+    opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Loading Skeleton
+   -------------------------------------------------------------------------- */
+.skeleton {
+    @apply animate-pulse;
+}
+
+.skeleton-line {
+    @apply h-4 rounded;
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.dark .skeleton-line {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Column Visibility Dropdown
+   -------------------------------------------------------------------------- */
+.column-dropdown {
+    @apply absolute right-0 mt-2 w-56 rounded-xl overflow-hidden shadow-2xl z-50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(209, 213, 219, 0.5);
+}
+
+.dark .column-dropdown {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(75, 85, 99, 0.5);
+}
+
+.column-item {
+    @apply px-4 py-2 flex items-center gap-3 transition-colors duration-200;
+}
+
+.column-item:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Export Dropdown
+   -------------------------------------------------------------------------- */
+.export-dropdown {
+    @apply absolute right-0 mt-2 w-48 rounded-xl overflow-hidden shadow-2xl z-50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(209, 213, 219, 0.5);
+}
+
+.dark .export-dropdown {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(75, 85, 99, 0.5);
+}
+
+.export-item {
+    @apply px-4 py-3 flex items-center gap-3 transition-all duration-200;
+}
+
+.export-item:hover {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+/* --------------------------------------------------------------------------
+   Advanced Filter Modal
+   -------------------------------------------------------------------------- */
+.filter-modal {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    @apply w-full max-w-2xl rounded-2xl overflow-hidden;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+
+.dark .modal-content {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.modal-header {
+    @apply px-6 py-4;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.modal-body {
+    @apply p-6;
+}
+
+.filter-group {
+    @apply mb-6;
+}
+
+.filter-label {
+    @apply block text-sm font-medium mb-2;
+}
+
+.filter-select {
+    @apply w-full px-4 py-2 rounded-lg border transition-all duration-300;
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(209, 213, 219, 0.5);
+}
+
+.dark .filter-select {
+    background: rgba(31, 41, 55, 0.7);
+    border-color: rgba(75, 85, 99, 0.5);
+    color: #f3f4f6;
+}
+
+/* --------------------------------------------------------------------------
+   Empty State
+   -------------------------------------------------------------------------- */
+.empty-state {
+    @apply text-center py-16;
+}
+
+.empty-state-icon {
+    @apply w-24 h-24 mx-auto mb-4 text-gray-400;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.empty-state-title {
+    @apply text-2xl font-bold mb-2;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Animations
+   -------------------------------------------------------------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Adjustments
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    .stat-card {
+        @apply p-4;
+    }
+    
+    .employee-grid {
+        @apply gap-4;
+    }
+    
+    .modal-content {
+        @apply mx-4;
+    }
+}

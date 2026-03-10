@@ -3,12 +3,19 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.management import call_command
 from django.core.paginator import Paginator
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.conf import settings
-from .models import Employee, Department, Position
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse, HttpResponse
+from .models import Employee, Department, Position
 import os
 import tempfile
+import json
+import csv
+import openpyxl
+from datetime import datetime
 
 def dashboard(request):
     total_employees = Employee.objects.count()
@@ -56,16 +63,285 @@ def import_employees_view(request):
     
     return redirect('admin:hr_employee_changelist')
 
+@staff_member_required
 def employee_list(request):
-    employees = Employee.objects.all().order_by('employee_id')
+    """
+    View utama untuk menampilkan daftar karyawan dengan semua fitur:
+    - Pencarian real-time
+    - Filter status
+    - Sorting
+    - Pagination
+    - Card/Table view
+    """
+    # Ambil parameter dari request
+    search_query = request.GET.get('search', '').strip()
+    status_filter = request.GET.get('status', '')
+    department_filter = request.GET.get('department', '')
+    position_filter = request.GET.get('position', '')
+    sort_by = request.GET.get('sort', 'employee_id')
+    order = request.GET.get('order', 'asc')
+    view_mode = request.GET.get('view', 'table')  # 'table' atau 'grid'
+    
+    # Base queryset dengan select_related untuk optimasi
+    employees = Employee.objects.all().select_related('department', 'position')
+    
+    # Filter berdasarkan pencarian
+    if search_query:
+        employees = employees.filter(
+            Q(employee_id__icontains=search_query) |
+            Q(nama__icontains=search_query) |
+            Q(no_ktp__icontains=search_query) |
+            Q(no_hp__icontains=search_query)
+        )
+    
+    # Filter berdasarkan status
+    if status_filter:
+        employees = employees.filter(employment_status=status_filter)
+    
+    # Filter berdasarkan department
+    if department_filter:
+        employees = employees.filter(department_id=department_filter)
+    
+    # Filter berdasarkan position
+    if position_filter:
+        employees = employees.filter(position_id=position_filter)
+    
+    # Sorting
+    if order == 'desc':
+        sort_by = f'-{sort_by}'
+    employees = employees.order_by(sort_by)
+    
+    # Statistik untuk cards
+    stats = {
+        'total': Employee.objects.count(),
+        'active': Employee.objects.filter(employment_status='active').count(),
+        'probation': Employee.objects.filter(employment_status='probation').count(),
+        'terminated': Employee.objects.filter(employment_status='terminated').count(),
+        'resigned': Employee.objects.filter(employment_status='resigned').count(),
+        'retired': Employee.objects.filter(employment_status='retired').count(),
+    }
+    
+    # Data untuk filter dropdown
+    departments = Department.objects.filter(is_active=True).values('id', 'name')
+    positions = Position.objects.filter(is_active=True).values('id', 'title')
+    
+    # Pagination
     paginator = Paginator(employees, 25)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'hr/employee_list.html', {'page_obj': page_obj})
-
-from django.contrib.auth.models import User
+    
+    # Siapkan parameter untuk maintain filter
+    params = {
+        'search': search_query,
+        'status': status_filter,
+        'department': department_filter,
+        'position': position_filter,
+        'sort': sort_by.lstrip('-'),
+        'order': order,
+        'view': view_mode,
+    }
+    
+    context = {
+        'page_obj': page_obj,
+        'stats': stats,
+        'departments': departments,
+        'positions': positions,
+        'params': params,
+        'view_mode': view_mode,
+        'search_query': search_query,
+        'status_filter': status_filter,
+        'department_filter': int(department_filter) if department_filter else None,
+        'position_filter': int(position_filter) if position_filter else None,
+        'sort_by': sort_by.lstrip('-'),
+        'order': order,
+    }
+    
+    return render(request, 'hr/employee_list.html', context)
 
 @staff_member_required
+@require_POST
+def employee_search_api(request):
+    """
+    API endpoint untuk pencarian real-time dengan debounce
+    Mengembalikan JSON untuk update tabel tanpa reload
+    """
+    data = json.loads(request.body)
+    search_query = data.get('search', '').strip()
+    status_filter = data.get('status', '')
+    department_filter = data.get('department', '')
+    position_filter = data.get('position', '')
+    page = int(data.get('page', 1))
+    
+    employees = Employee.objects.all().select_related('department', 'position')
+    
+    if search_query:
+        employees = employees.filter(
+            Q(employee_id__icontains=search_query) |
+            Q(nama__icontains=search_query)
+        )
+    
+    if status_filter:
+        employees = employees.filter(employment_status=status_filter)
+    
+    if department_filter:
+        employees = employees.filter(department_id=department_filter)
+    
+    if position_filter:
+        employees = employees.filter(position_id=position_filter)
+    
+    paginator = Paginator(employees, 25)
+    page_obj = paginator.get_page(page)
+    
+    # Format data untuk JSON
+    employees_data = []
+    for emp in page_obj:
+        employees_data.append({
+            'id': emp.id,
+            'employee_id': emp.employee_id,
+            'nama': emp.nama,
+            'department': emp.department.name if emp.department else '-',
+            'position': emp.position.title if emp.position else '-',
+            'employment_status': emp.employment_status,
+            'avatar_color': emp.department.name if emp.department else '',
+            'initials': get_initials(emp.nama),
+        })
+    
+    return JsonResponse({
+        'employees': employees_data,
+        'total_pages': paginator.num_pages,
+        'current_page': page_obj.number,
+        'total_count': paginator.count,
+    })
+
+def get_initials(nama):
+    """Helper function untuk mendapatkan inisial dari nama"""
+    if not nama:
+        return '??'
+    parts = nama.split()
+    if len(parts) >= 2:
+        return (parts[0][0] + parts[1][0]).upper()
+    return nama[:2].upper()
+
+@staff_member_required
+def export_employees(request):
+    """
+    Export data karyawan ke Excel atau CSV
+    Mendukung format pilihan dan kolom yang dipilih
+    """
+    export_format = request.GET.get('format', 'excel')
+    selected_columns = request.GET.getlist('columns')
+    status_filter = request.GET.get('status', '')
+    department_filter = request.GET.get('department', '')
+    
+    # Default columns jika tidak dipilih
+    if not selected_columns:
+        selected_columns = ['employee_id', 'nama', 'department', 'position', 
+                           'employment_status', 'no_hp', 'email']
+    
+    # Filter data
+    employees = Employee.objects.all().select_related('department', 'position')
+    if status_filter:
+        employees = employees.filter(employment_status=status_filter)
+    if department_filter:
+        employees = employees.filter(department_id=department_filter)
+    
+    # Mapping field ke display name
+    field_display = {
+        'employee_id': 'NIK',
+        'nama': 'Nama Lengkap',
+        'gender': 'Jenis Kelamin',
+        'tgl_lahir': 'Tanggal Lahir',
+        'tempat_lahir': 'Tempat Lahir',
+        'no_ktp': 'No KTP',
+        'no_kk': 'No KK',
+        'no_hp': 'No HP',
+        'alamat': 'Alamat',
+        'kelurahan': 'Kelurahan',
+        'kecamatan': 'Kecamatan',
+        'kabupaten_kota': 'Kabupaten/Kota',
+        'provinsi': 'Provinsi',
+        'kode_pos': 'Kode Pos',
+        'status_kawin': 'Status Kawin',
+        'agama': 'Agama',
+        'pendidikan': 'Pendidikan',
+        'department': 'Department',
+        'position': 'Posisi',
+        'employment_status': 'Status',
+        'tgl_rekrut': 'Tanggal Rekrut',
+        'tgl_out': 'Tanggal Keluar',
+        'no_rek_bank': 'No Rekening',
+        'nama_bank': 'Nama Bank',
+        'bpjs_tk_no': 'No BPJS TK',
+        'bpjs_kes_no': 'No BPJS Kesehatan',
+        'no_npwp': 'NPWP',
+    }
+    
+    if export_format == 'excel':
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = f'attachment; filename="employees_{datetime.now().strftime("%Y%m%d_%H%M%S")}.xlsx"'
+        
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Employees"
+        
+        # Header
+        for col, field in enumerate(selected_columns, 1):
+            ws.cell(row=1, column=col, value=field_display.get(field, field))
+        
+        # Data
+        for row, emp in enumerate(employees, 2):
+            for col, field in enumerate(selected_columns, 1):
+                value = getattr(emp, field, '')
+                if field == 'department' and emp.department:
+                    value = emp.department.name
+                elif field == 'position' and emp.position:
+                    value = emp.position.title
+                elif field == 'employment_status':
+                    value = dict(Employee.EMPLOYMENT_STATUS).get(emp.employment_status, '')
+                ws.cell(row=row, column=col, value=value)
+        
+        wb.save(response)
+        return response
+    
+    else:  # CSV
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename="employees_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv"'
+        
+        writer = csv.writer(response)
+        # Header
+        writer.writerow([field_display.get(field, field) for field in selected_columns])
+        
+        # Data
+        for emp in employees:
+            row = []
+            for field in selected_columns:
+                value = getattr(emp, field, '')
+                if field == 'department' and emp.department:
+                    value = emp.department.name
+                elif field == 'position' and emp.position:
+                    value = emp.position.title
+                elif field == 'employment_status':
+                    value = dict(Employee.EMPLOYMENT_STATUS).get(emp.employment_status, '')
+                row.append(value)
+            writer.writerow(row)
+        
+        return response
+
+@staff_member_required
+def get_filter_options(request):
+    """API untuk mendapatkan opsi filter (department, position)"""
+    departments = list(Department.objects.filter(is_active=True).values('id', 'name'))
+    positions = list(Position.objects.filter(is_active=True).values('id', 'title'))
+    
+    return JsonResponse({
+        'departments': departments,
+        'positions': positions,
+    })
+
+@staff_member_required
+@csrf_protect
 def create_user_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
