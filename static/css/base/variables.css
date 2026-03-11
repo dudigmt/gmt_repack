@@ -66,6 +66,8 @@
     --color-gray-900: #111827;
     --color-gray-950: #030712;
 
+
+
     /* ------------------------------------------------------------------------
        Dark Mode Colors (akan override saat class "dark" di html)
        ------------------------------------------------------------------------ */
@@ -176,50 +178,108 @@
 }
 
 /* --------------------------------------------------------------------------
-   Dark Mode Variables
-   -------------------------------------------------------------------------- */
-.dark {
-    --bg-primary: var(--dark-bg-primary);
-    --bg-secondary: var(--dark-bg-secondary);
-    --bg-tertiary: var(--dark-bg-tertiary);
-    --bg-elevated: var(--dark-bg-elevated);
-
-    --text-primary: var(--dark-text-primary);
-    --text-secondary: var(--dark-text-secondary);
-    --text-tertiary: var(--dark-text-tertiary);
-    --text-muted: var(--dark-text-muted);
-
-    --border-color: var(--dark-border);
-    --border-color-light: var(--dark-border-light);
-
-    /* Glassmorphism untuk dark mode */
-    --glass-bg: rgba(17, 24, 39, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.05);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-/* --------------------------------------------------------------------------
-   Light Mode Variables (default)
+   LIGHT MODE (Default) - Fresh & Clean
    -------------------------------------------------------------------------- */
 :root,
 .light {
-    --bg-primary: #ffffff;
-    --bg-secondary: var(--color-gray-50);
-    --bg-tertiary: var(--color-gray-100);
-    --bg-elevated: #ffffff;
+    /* Background Colors - Soft white */
+    --bg-primary: #f8fafc;        /* Abu-abu super soft */
+    --bg-secondary: #ffffff;       /* Putih bersih untuk card */
+    --bg-tertiary: #f1f5f9;        /* Abu soft untuk hover */
+    --bg-elevated: #ffffff;        /* Putih untuk elemen terangkat */
 
-    --text-primary: var(--color-gray-900);
-    --text-secondary: var(--color-gray-800);
-    --text-tertiary: var(--color-gray-600);
-    --text-muted: var(--color-gray-500);
+    /* Text Colors - Soft black */
+    --text-primary: #0f172a;       /* Hitam soft untuk judul */
+    --text-secondary: #334155;     /* Abu gelap untuk teks biasa */
+    --text-tertiary: #64748b;      /* Abu-abu untuk teks secondary */
+    --text-muted: #94a3b8;         /* Abu paling soft */
 
-    --border-color: var(--color-gray-200);
-    --border-color-light: var(--color-gray-300);
+    /* Border Colors */
+    --border-color: #e2e8f0;       /* Abu soft untuk border */
+    --border-color-light: #cbd5e1;
 
-    /* Glassmorphism untuk light mode */
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+
+    /* Shadows - Lebih subtle */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.02);
+    --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.03), 0 1px 2px -1px rgb(0 0 0 / 0.03);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.03), 0 2px 4px -2px rgb(0 0 0 / 0.03);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.03), 0 4px 6px -4px rgb(0 0 0 / 0.03);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.03), 0 8px 10px -6px rgb(0 0 0 / 0.03);
+}
+
+/* --------------------------------------------------------------------------
+   DARK MODE - Mata Adem (Bukan Hitam Pekat)
+   -------------------------------------------------------------------------- */
+.dark {
+    /* Background Colors - Deep but not pitch black */
+    --bg-primary: #0f172a;        /* Navy gelap - lebih soft dari hitam */
+    --bg-secondary: #1e293b;       /* Abu-abu gelap untuk card */
+    --bg-tertiary: #334155;        /* Abu sedikit lebih terang untuk hover */
+    --bg-elevated: #1e293b;        /* Sama dengan card */
+
+    /* Text Colors - Soft white, bukan putih murni */
+    --text-primary: #f1f5f9;       /* Putih soft untuk judul */
+    --text-secondary: #cbd5e1;      /* Abu-abu terang untuk teks biasa */
+    --text-tertiary: #94a3b8;       /* Abu-abu untuk teks secondary */
+    --text-muted: #64748b;          /* Abu-abu paling gelap */
+
+    /* Border Colors */
+    --border-color: #334155;        /* Border yang soft */
+    --border-color-light: #475569;
+
+    /* Glassmorphism untuk dark mode */
+    --glass-bg: rgba(30, 41, 59, 0.8);    /* #1e293b dengan opacity */
+    --glass-border: rgba(255, 255, 255, 0.03);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+    /* Shadows - Lebih subtle di dark mode */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+
+    /* Primary colors - Lebih redup untuk dark mode */
+    --color-primary-400: #60a5fa;    /* Biru lebih soft */
+    --color-primary-500: #3b82f6;    /* Tetap tapi ga terlalu mencolok */
+    --color-primary-600: #2563eb;
+    
+    /* Secondary colors - Lebih redup */
+    --color-secondary-400: #a78bfa;
+    --color-secondary-500: #8b5cf6;
+    --color-secondary-600: #7c3aed;
+}
+
+/* --------------------------------------------------------------------------
+   Override untuk komponen tertentu di dark mode
+   -------------------------------------------------------------------------- */
+.dark .card,
+.dark .table-container,
+.dark .modal-content {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+.dark .stat-card {
+    background: var(--bg-secondary);
+}
+
+.dark .btn-ghost:hover {
+    background: var(--bg-tertiary);
+}
+
+/* --------------------------------------------------------------------------
+   Smooth transition untuk mode switch
+   -------------------------------------------------------------------------- */
+* {
+    transition: background-color 0.2s ease-in-out,
+                border-color 0.2s ease-in-out,
+                color 0.2s ease-in-out,
+                box-shadow 0.2s ease-in-out;
 }
 
 /* --------------------------------------------------------------------------

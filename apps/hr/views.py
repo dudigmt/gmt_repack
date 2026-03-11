@@ -46,7 +46,7 @@ def import_employees_view(request):
             tmp_path = tmp.name
         
         try:
-            # Panggil management command
+            # Panggil management command SIMPLE (hanya NIK & Nama)
             from io import StringIO
             output = StringIO()
             call_command('import_employees', tmp_path, stdout=output)
@@ -61,7 +61,7 @@ def import_employees_view(request):
         
         return redirect('admin:hr_employee_changelist')
     
-    return redirect('admin:hr_employee_changelist')
+    return render(request, 'admin/hr/employee/import_form.html')  # Tampilkan form kalo bukan POST
 
 @staff_member_required
 def employee_list(request):
