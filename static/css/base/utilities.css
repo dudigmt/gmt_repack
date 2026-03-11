@@ -1,0 +1,518 @@
+/* ==========================================================================
+   Utilities - GMT Repack
+   Helper classes, animations, dan utility styles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Borders & Border Radius
+   -------------------------------------------------------------------------- */
+.border {
+    border: 1px solid var(--border-color);
+}
+
+.border-t {
+    border-top: 1px solid var(--border-color);
+}
+
+.border-b {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.border-l {
+    border-left: 1px solid var(--border-color);
+}
+
+.border-r {
+    border-right: 1px solid var(--border-color);
+}
+
+.border-0 {
+    border: 0;
+}
+
+.rounded-none {
+    border-radius: 0;
+}
+
+.rounded-sm {
+    border-radius: var(--radius-sm);
+}
+
+.rounded {
+    border-radius: var(--radius-base);
+}
+
+.rounded-md {
+    border-radius: var(--radius-md);
+}
+
+.rounded-lg {
+    border-radius: var(--radius-lg);
+}
+
+.rounded-xl {
+    border-radius: var(--radius-xl);
+}
+
+.rounded-full {
+    border-radius: var(--radius-full);
+}
+
+/* --------------------------------------------------------------------------
+   Shadows
+   -------------------------------------------------------------------------- */
+.shadow-none {
+    box-shadow: none;
+}
+
+.shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow {
+    box-shadow: var(--shadow-base);
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+.shadow-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+.shadow-2xl {
+    box-shadow: var(--shadow-2xl);
+}
+
+.shadow-glass {
+    box-shadow: var(--shadow-glass);
+}
+
+.shadow-glass-hover {
+    box-shadow: var(--shadow-glass-hover);
+}
+
+/* --------------------------------------------------------------------------
+   Background Colors
+   -------------------------------------------------------------------------- */
+.bg-primary {
+    background-color: var(--bg-primary);
+}
+
+.bg-secondary {
+    background-color: var(--bg-secondary);
+}
+
+.bg-tertiary {
+    background-color: var(--bg-tertiary);
+}
+
+.bg-elevated {
+    background-color: var(--bg-elevated);
+}
+
+/* Glassmorphism */
+.bg-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* --------------------------------------------------------------------------
+   Opacity
+   -------------------------------------------------------------------------- */
+.opacity-0 { opacity: 0; }
+.opacity-10 { opacity: 0.1; }
+.opacity-20 { opacity: 0.2; }
+.opacity-30 { opacity: 0.3; }
+.opacity-40 { opacity: 0.4; }
+.opacity-50 { opacity: 0.5; }
+.opacity-60 { opacity: 0.6; }
+.opacity-70 { opacity: 0.7; }
+.opacity-80 { opacity: 0.8; }
+.opacity-90 { opacity: 0.9; }
+.opacity-100 { opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   Visibility
+   -------------------------------------------------------------------------- */
+.visible {
+    visibility: visible;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Display
+   -------------------------------------------------------------------------- */
+.block {
+    display: block;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.inline {
+    display: inline;
+}
+
+.flex {
+    display: flex;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.grid {
+    display: grid;
+}
+
+.table {
+    display: table;
+}
+
+.table-cell {
+    display: table-cell;
+}
+
+.hidden {
+    display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Position
+   -------------------------------------------------------------------------- */
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.sticky {
+    position: sticky;
+}
+
+.static {
+    position: static;
+}
+
+/* Position coordinates */
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+
+.top-1 { top: var(--spacing-1); }
+.right-1 { right: var(--spacing-1); }
+.bottom-1 { bottom: var(--spacing-1); }
+.left-1 { left: var(--spacing-1); }
+
+.top-2 { top: var(--spacing-2); }
+.right-2 { right: var(--spacing-2); }
+.bottom-2 { bottom: var(--spacing-2); }
+.left-2 { left: var(--spacing-2); }
+
+.top-4 { top: var(--spacing-4); }
+.right-4 { right: var(--spacing-4); }
+.bottom-4 { bottom: var(--spacing-4); }
+.left-4 { left: var(--spacing-4); }
+
+/* --------------------------------------------------------------------------
+   Z-Index
+   -------------------------------------------------------------------------- */
+.z-0 { z-index: 0; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }
+.z-auto { z-index: auto; }
+.z-dropdown { z-index: var(--z-dropdown); }
+.z-sticky { z-index: var(--z-sticky); }
+.z-fixed { z-index: var(--z-fixed); }
+.z-modal { z-index: var(--z-modal); }
+.z-tooltip { z-index: var(--z-tooltip); }
+
+/* --------------------------------------------------------------------------
+   Overflow
+   -------------------------------------------------------------------------- */
+.overflow-auto { overflow: auto; }
+.overflow-hidden { overflow: hidden; }
+.overflow-visible { overflow: visible; }
+.overflow-scroll { overflow: scroll; }
+
+.overflow-x-auto { overflow-x: auto; }
+.overflow-y-auto { overflow-y: auto; }
+
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-y-hidden { overflow-y: hidden; }
+
+/* --------------------------------------------------------------------------
+   Cursor
+   -------------------------------------------------------------------------- */
+.cursor-auto { cursor: auto; }
+.cursor-default { cursor: default; }
+.cursor-pointer { cursor: pointer; }
+.cursor-wait { cursor: wait; }
+.cursor-text { cursor: text; }
+.cursor-move { cursor: move; }
+.cursor-not-allowed { cursor: not-allowed; }
+
+/* --------------------------------------------------------------------------
+   Animations
+   -------------------------------------------------------------------------- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Loading Skeleton
+   -------------------------------------------------------------------------- */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-gray-200) 25%,
+        var(--color-gray-300) 37%,
+        var(--color-gray-200) 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+}
+
+.dark .skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-gray-700) 25%,
+        var(--color-gray-600) 37%,
+        var(--color-gray-700) 63%
+    );
+    background-size: 400% 100%;
+}
+
+.skeleton-line {
+    height: 1rem;
+    border-radius: var(--radius-base);
+    width: 100%;
+}
+
+.skeleton-circle {
+    border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   Transitions
+   -------------------------------------------------------------------------- */
+.transition-all {
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.transition-colors {
+    transition: background-color var(--transition-base) var(--transition-timing),
+                border-color var(--transition-base) var(--transition-timing),
+                color var(--transition-base) var(--transition-timing);
+}
+
+.transition-transform {
+    transition: transform var(--transition-base) var(--transition-timing);
+}
+
+.transition-opacity {
+    transition: opacity var(--transition-base) var(--transition-timing);
+}
+
+.transition-shadow {
+    transition: box-shadow var(--transition-base) var(--transition-timing);
+}
+
+/* --------------------------------------------------------------------------
+   Hover Effects
+   -------------------------------------------------------------------------- */
+.hover\:scale-105:hover {
+    transform: scale(1.05);
+}
+
+.hover\:shadow-lg:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.hover\:shadow-xl:hover {
+    box-shadow: var(--shadow-xl);
+}
+
+.hover\:bg-primary:hover {
+    background-color: var(--bg-primary);
+}
+
+.hover\:bg-secondary:hover {
+    background-color: var(--bg-secondary);
+}
+
+.hover\:bg-tertiary:hover {
+    background-color: var(--bg-tertiary);
+}
+
+/* --------------------------------------------------------------------------
+   Focus States
+   -------------------------------------------------------------------------- */
+.focus\:outline-none:focus {
+    outline: none;
+}
+
+.focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px var(--color-primary-500);
+}
+
+.focus\:ring-blue:focus {
+    box-shadow: 0 0 0 2px var(--color-primary-500);
+}
+
+/* --------------------------------------------------------------------------
+   Dark Mode Specific
+   -------------------------------------------------------------------------- */
+.dark .border {
+    border-color: var(--dark-border);
+}
+
+.dark .border-t,
+.dark .border-b,
+.dark .border-l,
+.dark .border-r {
+    border-color: var(--dark-border);
+}
+
+/* --------------------------------------------------------------------------
+   Print Styles
+   -------------------------------------------------------------------------- */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-only {
+        display: block !important;
+    }
+    
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+}

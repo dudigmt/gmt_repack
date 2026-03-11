@@ -1,0 +1,371 @@
+/* ==========================================================================
+   Avatars - GMT Repack
+   Avatar components dengan inisial, gradient, dan variasi ukuran
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Base Avatar
+   -------------------------------------------------------------------------- */
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-semibold);
+    color: white;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast) var(--transition-timing);
+    flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Avatar Sizes
+   -------------------------------------------------------------------------- */
+.avatar-xs {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+    border-radius: var(--radius-base);
+}
+
+.avatar-sm {
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-xs);
+    border-radius: var(--radius-base);
+}
+
+.avatar-md {
+    width: 40px;
+    height: 40px;
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-lg);
+}
+
+.avatar-lg {
+    width: 48px;
+    height: 48px;
+    font-size: var(--font-size-base);
+    border-radius: var(--radius-lg);
+}
+
+.avatar-xl {
+    width: 64px;
+    height: 64px;
+    font-size: var(--font-size-xl);
+    border-radius: var(--radius-xl);
+}
+
+.avatar-2xl {
+    width: 80px;
+    height: 80px;
+    font-size: var(--font-size-2xl);
+    border-radius: var(--radius-xl);
+}
+
+.avatar-3xl {
+    width: 96px;
+    height: 96px;
+    font-size: var(--font-size-3xl);
+    border-radius: var(--radius-2xl);
+}
+
+/* --------------------------------------------------------------------------
+   Avatar Shapes
+   -------------------------------------------------------------------------- */
+.avatar-circle {
+    border-radius: 50%;
+}
+
+.avatar-square {
+    border-radius: var(--radius-base);
+}
+
+.avatar-rounded {
+    border-radius: var(--radius-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Avatar dengan Gradient Background
+   -------------------------------------------------------------------------- */
+.avatar-gradient-1 {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.avatar-gradient-2 {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.avatar-gradient-3 {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.avatar-gradient-4 {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.avatar-gradient-5 {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.avatar-gradient-6 {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+.avatar-gradient-7 {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+
+.avatar-gradient-8 {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+.avatar-gradient-9 {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+}
+
+.avatar-gradient-10 {
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+}
+
+/* --------------------------------------------------------------------------
+   Avatar dengan Solid Background
+   -------------------------------------------------------------------------- */
+.avatar-blue {
+    background: #3b82f6;
+}
+
+.avatar-green {
+    background: #10b981;
+}
+
+.avatar-yellow {
+    background: #f59e0b;
+}
+
+.avatar-red {
+    background: #ef4444;
+}
+
+.avatar-purple {
+    background: #8b5cf6;
+}
+
+.avatar-pink {
+    background: #ec4899;
+}
+
+.avatar-cyan {
+    background: #06b6d4;
+}
+
+.avatar-orange {
+    background: #f97316;
+}
+
+.avatar-gray {
+    background: #6b7280;
+}
+
+/* --------------------------------------------------------------------------
+   Avatar dengan Status Dot
+   -------------------------------------------------------------------------- */
+.avatar-with-status {
+    position: relative;
+}
+
+.status-dot {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.dark .status-dot {
+    border-color: var(--dark-bg-secondary);
+}
+
+.status-dot.online {
+    background: #10b981;
+}
+
+.status-dot.offline {
+    background: #9ca3af;
+}
+
+.status-dot.away {
+    background: #f59e0b;
+}
+
+.status-dot.busy {
+    background: #ef4444;
+}
+
+/* --------------------------------------------------------------------------
+   Avatar Group
+   -------------------------------------------------------------------------- */
+.avatar-group {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-group .avatar {
+    border: 2px solid var(--bg-primary);
+    margin-right: -8px;
+    transition: transform var(--transition-fast) var(--transition-timing);
+}
+
+.dark .avatar-group .avatar {
+    border-color: var(--dark-bg-secondary);
+}
+
+.avatar-group .avatar:hover {
+    transform: translateY(-4px);
+    z-index: 1;
+}
+
+.avatar-group-count {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    border: 2px solid var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    margin-left: -8px;
+}
+
+/* --------------------------------------------------------------------------
+   Avatar dengan Initials
+   -------------------------------------------------------------------------- */
+.avatar-initials {
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.5px;
+}
+
+/* --------------------------------------------------------------------------
+   Avatar dengan Image
+   -------------------------------------------------------------------------- */
+.avatar-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Avatar dengan Border
+   -------------------------------------------------------------------------- */
+.avatar-bordered {
+    border: 2px solid white;
+    box-shadow: var(--shadow-md);
+}
+
+.dark .avatar-bordered {
+    border-color: var(--dark-bg-secondary);
+}
+
+.avatar-bordered-primary {
+    border: 2px solid var(--color-primary-500);
+}
+
+/* --------------------------------------------------------------------------
+   Avatar dengan Shadow
+   -------------------------------------------------------------------------- */
+.avatar-shadow {
+    box-shadow: var(--shadow-lg);
+}
+
+.avatar-shadow-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Avatar dengan Hover Effect
+   -------------------------------------------------------------------------- */
+.avatar-hover {
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.avatar-hover:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Avatar untuk Department (warna berdasarkan department)
+   -------------------------------------------------------------------------- */
+.avatar-dept-it {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.avatar-dept-hr {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.avatar-dept-finance {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.avatar-dept-marketing {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+.avatar-dept-production {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.avatar-dept-warehouse {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+/* --------------------------------------------------------------------------
+   Avatar untuk Status Karyawan
+   -------------------------------------------------------------------------- */
+.avatar-status-active {
+    box-shadow: 0 0 0 2px #10b981;
+}
+
+.avatar-status-probation {
+    box-shadow: 0 0 0 2px #f59e0b;
+}
+
+.avatar-status-terminated {
+    box-shadow: 0 0 0 2px #ef4444;
+}
+
+.avatar-status-resigned {
+    box-shadow: 0 0 0 2px #6b7280;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Avatars
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    .avatar-lg {
+        width: 40px;
+        height: 40px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .avatar-xl {
+        width: 48px;
+        height: 48px;
+        font-size: var(--font-size-base);
+    }
+    
+    .avatar-2xl {
+        width: 64px;
+        height: 64px;
+        font-size: var(--font-size-lg);
+    }
+}

@@ -1,0 +1,360 @@
+/* ==========================================================================
+   Dropdowns - GMT Repack
+   Dropdown menus, select dropdowns, dan popup menus
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Dropdown Container
+   -------------------------------------------------------------------------- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    position: absolute;
+    z-index: var(--z-dropdown);
+    min-width: 200px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-xl);
+    padding: var(--spacing-2) 0;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.dark .dropdown-content {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Dropdown Positions */
+.dropdown-left {
+    right: 0;
+}
+
+.dropdown-right {
+    left: 0;
+}
+
+.dropdown-top {
+    bottom: 100%;
+    margin-bottom: var(--spacing-2);
+}
+
+.dropdown-bottom {
+    top: 100%;
+    margin-top: var(--spacing-2);
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Header
+   -------------------------------------------------------------------------- */
+.dropdown-header {
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dark .dropdown-header {
+    border-color: var(--dark-border);
+    color: var(--dark-text-tertiary);
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Items
+   -------------------------------------------------------------------------- */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast) var(--transition-timing);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dark .dropdown-item {
+    color: var(--dark-text-secondary);
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600));
+    color: white;
+}
+
+.dropdown-item:hover .dropdown-item-icon {
+    color: white;
+}
+
+.dropdown-item.active {
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+    font-weight: var(--font-weight-medium);
+}
+
+.dark .dropdown-item.active {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+}
+
+.dropdown-item.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Item Icon
+   -------------------------------------------------------------------------- */
+.dropdown-item-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--text-tertiary);
+    transition: color var(--transition-fast) var(--transition-timing);
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Divider
+   -------------------------------------------------------------------------- */
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: var(--spacing-2) 0;
+}
+
+.dark .dropdown-divider {
+    background: var(--dark-border);
+}
+
+/* --------------------------------------------------------------------------
+   Export Dropdown Specific
+   -------------------------------------------------------------------------- */
+.export-dropdown {
+    composes: dropdown-content;
+    min-width: 180px;
+}
+
+.export-item {
+    composes: dropdown-item;
+}
+
+.export-item svg {
+    width: 18px;
+    height: 18px;
+}
+
+.export-item:hover svg {
+    color: white;
+}
+
+/* --------------------------------------------------------------------------
+   Column Visibility Dropdown
+   -------------------------------------------------------------------------- */
+.column-dropdown {
+    composes: dropdown-content;
+    min-width: 220px;
+}
+
+.column-item {
+    composes: dropdown-item;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.column-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--border-color);
+    appearance: none;
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.dark .column-item input[type="checkbox"] {
+    border-color: var(--dark-border);
+}
+
+.column-item input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600));
+    border-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* --------------------------------------------------------------------------
+   User Dropdown (Profile)
+   -------------------------------------------------------------------------- */
+.user-dropdown {
+    composes: dropdown-content;
+    width: 280px;
+}
+
+.user-dropdown-header {
+    padding: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.user-dropdown-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.user-dropdown-info {
+    flex: 1;
+}
+
+.user-dropdown-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.user-dropdown-email {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown dengan Scroll
+   -------------------------------------------------------------------------- */
+.dropdown-scroll {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown dengan Search
+   -------------------------------------------------------------------------- */
+.dropdown-search {
+    padding: var(--spacing-3);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown-search-input {
+    width: 100%;
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-base);
+    color: var(--text-primary);
+}
+
+.dark .dropdown-search-input {
+    background: var(--dark-bg-tertiary);
+    border-color: var(--dark-border);
+    color: var(--dark-text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown dengan Badge
+   -------------------------------------------------------------------------- */
+.dropdown-item-badge {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 2px var(--spacing-2);
+    border-radius: var(--radius-full);
+    background: var(--bg-tertiary);
+    color: var(--text-tertiary);
+}
+
+.dropdown-item:hover .dropdown-item-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Trigger Button
+   -------------------------------------------------------------------------- */
+.dropdown-trigger {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.dropdown-trigger::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid currentColor;
+    margin-left: var(--spacing-2);
+    transition: transform var(--transition-fast) var(--transition-timing);
+}
+
+.dropdown-trigger.active::after {
+    transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Animations
+   -------------------------------------------------------------------------- */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-content {
+    animation: slideDown 0.2s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    .dropdown-content {
+        position: fixed;
+        left: var(--spacing-4) !important;
+        right: var(--spacing-4) !important;
+        width: auto;
+        max-width: none;
+    }
+    
+    .dropdown-left,
+    .dropdown-right {
+        left: var(--spacing-4);
+        right: var(--spacing-4);
+    }
+    
+    .dropdown-top {
+        bottom: auto;
+        top: auto;
+    }
+    
+    .dropdown-bottom {
+        bottom: auto;
+        top: auto;
+    }
+}

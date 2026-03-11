@@ -1,0 +1,291 @@
+/* ==========================================================================
+   CSS Reset - Modern Reset by Andy Bell
+   Sumber: https://piccalil.li/blog/a-modern-css-reset/
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Box Sizing
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Remove default margin
+   -------------------------------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Body defaults
+   -------------------------------------------------------------------------- */
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 
+                 'Noto Sans', 'Liberation Sans', Arial, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Media defaults
+   -------------------------------------------------------------------------- */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Form elements
+   -------------------------------------------------------------------------- */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    border: none;
+    background: none;
+}
+
+/* --------------------------------------------------------------------------
+   Remove default button styles
+   -------------------------------------------------------------------------- */
+button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   Remove list styles
+   -------------------------------------------------------------------------- */
+ul,
+ol {
+    list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    font-size: inherit;
+    line-height: 1.2;
+}
+
+/* --------------------------------------------------------------------------
+   Links
+   -------------------------------------------------------------------------- */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Tables
+   -------------------------------------------------------------------------- */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Quotes
+   -------------------------------------------------------------------------- */
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+    content: '';
+    content: none;
+}
+
+/* --------------------------------------------------------------------------
+   Horizontal rule
+   -------------------------------------------------------------------------- */
+hr {
+    border: none;
+    border-top: 1px solid;
+    height: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Remove animations for users who prefer reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Focus styles for accessibility
+   -------------------------------------------------------------------------- */
+:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Selection styling
+   -------------------------------------------------------------------------- */
+::selection {
+    background-color: var(--color-primary-500);
+    color: white;
+}
+
+/* --------------------------------------------------------------------------
+   Scrollbar styling (Webkit)
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-gray-400);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-500);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+    background: var(--dark-bg-secondary);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: var(--color-gray-600);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-500);
+}
+
+/* --------------------------------------------------------------------------
+   Base element styles
+   -------------------------------------------------------------------------- */
+html {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color var(--transition-base) var(--transition-timing),
+                color var(--transition-base) var(--transition-timing);
+}
+
+/* --------------------------------------------------------------------------
+   Container for main content
+   -------------------------------------------------------------------------- */
+.container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding-left: var(--spacing-6);
+        padding-right: var(--spacing-6);
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding-left: var(--spacing-8);
+        padding-right: var(--spacing-8);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Hide elements visually but keep them accessible for screen readers
+   -------------------------------------------------------------------------- */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Helper classes
+   -------------------------------------------------------------------------- */
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    visibility: hidden !important;
+}
+
+/* --------------------------------------------------------------------------
+   Loading states
+   -------------------------------------------------------------------------- */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    cursor: wait;
+}
+
+/* --------------------------------------------------------------------------
+   Disabled states
+   -------------------------------------------------------------------------- */
+.disabled,
+[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}

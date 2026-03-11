@@ -1,0 +1,30 @@
+/* ==========================================================================
+   MAIN CSS - GMT Repack
+   Import semua file CSS secara terstruktur
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Base Styles
+   -------------------------------------------------------------------------- */
+@import './base/variables.css';
+@import './base/reset.css';
+@import './base/typography.css';
+@import './base/layout.css';
+@import './base/utilities.css';
+
+/* --------------------------------------------------------------------------
+   Components
+   -------------------------------------------------------------------------- */
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/tables.css';
+@import './components/forms.css';
+@import './components/modals.css';
+@import './components/badges.css';
+@import './components/avatars.css';
+@import './components/dropdowns.css';
+
+/* --------------------------------------------------------------------------
+   Pages - akan diimport sesuai halaman
+   @import './pages/hr/employee-list.css';
+   -------------------------------------------------------------------------- */

@@ -1,0 +1,254 @@
+/* ==========================================================================
+   CSS Variables - GMT Repack
+   Semua variabel warna, spacing, font, dan konfigurasi global
+   ========================================================================== */
+
+:root {
+    /* ------------------------------------------------------------------------
+       Warna Primer - Brand Colors
+       ------------------------------------------------------------------------ */
+    --color-primary-50: #eff6ff;
+    --color-primary-100: #dbeafe;
+    --color-primary-200: #bfdbfe;
+    --color-primary-300: #93c5fd;
+    --color-primary-400: #60a5fa;
+    --color-primary-500: #3b82f6;
+    --color-primary-600: #2563eb;
+    --color-primary-700: #1d4ed8;
+    --color-primary-800: #1e40af;
+    --color-primary-900: #1e3a8a;
+
+    /* ------------------------------------------------------------------------
+       Warna Secondary - Ungu/Aksen
+       ------------------------------------------------------------------------ */
+    --color-secondary-50: #f5f3ff;
+    --color-secondary-100: #ede9fe;
+    --color-secondary-200: #ddd6fe;
+    --color-secondary-300: #c4b5fd;
+    --color-secondary-400: #a78bfa;
+    --color-secondary-500: #8b5cf6;
+    --color-secondary-600: #7c3aed;
+    --color-secondary-700: #6d28d9;
+    --color-secondary-800: #5b21b6;
+    --color-secondary-900: #4c1d95;
+
+    /* ------------------------------------------------------------------------
+       Warna Status
+       ------------------------------------------------------------------------ */
+    --color-success: #10b981;
+    --color-success-light: #d1fae5;
+    --color-success-dark: #059669;
+
+    --color-warning: #f59e0b;
+    --color-warning-light: #fef3c7;
+    --color-warning-dark: #d97706;
+
+    --color-danger: #ef4444;
+    --color-danger-light: #fee2e2;
+    --color-danger-dark: #dc2626;
+
+    --color-info: #3b82f6;
+    --color-info-light: #dbeafe;
+    --color-info-dark: #2563eb;
+
+    /* ------------------------------------------------------------------------
+       Warna Gray Scale
+       ------------------------------------------------------------------------ */
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+    --color-gray-950: #030712;
+
+    /* ------------------------------------------------------------------------
+       Dark Mode Colors (akan override saat class "dark" di html)
+       ------------------------------------------------------------------------ */
+    --dark-bg-primary: #030712;
+    --dark-bg-secondary: #111827;
+    --dark-bg-tertiary: #1f2937;
+    --dark-bg-elevated: #374151;
+    
+    --dark-text-primary: #f9fafb;
+    --dark-text-secondary: #e5e7eb;
+    --dark-text-tertiary: #9ca3af;
+    --dark-text-muted: #6b7280;
+
+    --dark-border: #374151;
+    --dark-border-light: #4b5563;
+
+    /* ------------------------------------------------------------------------
+       Spacing System
+       ------------------------------------------------------------------------ */
+    --spacing-1: 0.25rem;   /* 4px */
+    --spacing-2: 0.5rem;    /* 8px */
+    --spacing-3: 0.75rem;   /* 12px */
+    --spacing-4: 1rem;      /* 16px */
+    --spacing-5: 1.25rem;   /* 20px */
+    --spacing-6: 1.5rem;    /* 24px */
+    --spacing-8: 2rem;      /* 32px */
+    --spacing-10: 2.5rem;   /* 40px */
+    --spacing-12: 3rem;     /* 48px */
+    --spacing-16: 4rem;     /* 64px */
+    --spacing-20: 5rem;     /* 80px */
+    --spacing-24: 6rem;     /* 96px */
+
+    /* ------------------------------------------------------------------------
+       Font Sizes
+       ------------------------------------------------------------------------ */
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.25rem;    /* 20px */
+    --font-size-2xl: 1.5rem;    /* 24px */
+    --font-size-3xl: 1.875rem;  /* 30px */
+    --font-size-4xl: 2.25rem;   /* 36px */
+
+    /* ------------------------------------------------------------------------
+       Font Weights
+       ------------------------------------------------------------------------ */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* ------------------------------------------------------------------------
+       Border Radius
+       ------------------------------------------------------------------------ */
+    --radius-sm: 0.25rem;    /* 4px */
+    --radius-base: 0.5rem;   /* 8px */
+    --radius-md: 0.75rem;    /* 12px */
+    --radius-lg: 1rem;       /* 16px */
+    --radius-xl: 1.5rem;     /* 24px */
+    --radius-full: 9999px;
+
+    /* ------------------------------------------------------------------------
+       Shadows
+       ------------------------------------------------------------------------ */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    
+    /* Glassmorphism */
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-glass-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+    /* ------------------------------------------------------------------------
+       Transitions
+       ------------------------------------------------------------------------ */
+    --transition-fast: 150ms;
+    --transition-base: 250ms;
+    --transition-slow: 350ms;
+    
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-timing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-timing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ------------------------------------------------------------------------
+       Z-index Layers
+       ------------------------------------------------------------------------ */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-toast: 1080;
+
+    /* ------------------------------------------------------------------------
+       Layout
+       ------------------------------------------------------------------------ */
+    --sidebar-width: 16rem;        /* 256px */
+    --sidebar-collapsed-width: 5rem; /* 80px */
+    --header-height: 4rem;         /* 64px */
+    --container-max-width: 1280px;
+}
+
+/* --------------------------------------------------------------------------
+   Dark Mode Variables
+   -------------------------------------------------------------------------- */
+.dark {
+    --bg-primary: var(--dark-bg-primary);
+    --bg-secondary: var(--dark-bg-secondary);
+    --bg-tertiary: var(--dark-bg-tertiary);
+    --bg-elevated: var(--dark-bg-elevated);
+
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --text-tertiary: var(--dark-text-tertiary);
+    --text-muted: var(--dark-text-muted);
+
+    --border-color: var(--dark-border);
+    --border-color-light: var(--dark-border-light);
+
+    /* Glassmorphism untuk dark mode */
+    --glass-bg: rgba(17, 24, 39, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Light Mode Variables (default)
+   -------------------------------------------------------------------------- */
+:root,
+.light {
+    --bg-primary: #ffffff;
+    --bg-secondary: var(--color-gray-50);
+    --bg-tertiary: var(--color-gray-100);
+    --bg-elevated: #ffffff;
+
+    --text-primary: var(--color-gray-900);
+    --text-secondary: var(--color-gray-800);
+    --text-tertiary: var(--color-gray-600);
+    --text-muted: var(--color-gray-500);
+
+    --border-color: var(--color-gray-200);
+    --border-color-light: var(--color-gray-300);
+
+    /* Glassmorphism untuk light mode */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   CSS Custom Properties untuk Gradient Colors (Avatar, Badges, dll)
+   -------------------------------------------------------------------------- */
+:root {
+    /* Gradient Avatar Colors */
+    --gradient-avatar-1: linear-gradient(135deg, #3b82f6, #2563eb);
+    --gradient-avatar-2: linear-gradient(135deg, #10b981, #059669);
+    --gradient-avatar-3: linear-gradient(135deg, #f59e0b, #d97706);
+    --gradient-avatar-4: linear-gradient(135deg, #ef4444, #dc2626);
+    --gradient-avatar-5: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    --gradient-avatar-6: linear-gradient(135deg, #ec4899, #db2777);
+    --gradient-avatar-7: linear-gradient(135deg, #06b6d4, #0891b2);
+    --gradient-avatar-8: linear-gradient(135deg, #f97316, #ea580c);
+    --gradient-avatar-9: linear-gradient(135deg, #6b7280, #4b5563);
+    --gradient-avatar-10: linear-gradient(135deg, #14b8a6, #0d9488);
+
+    /* Gradient Card Headers */
+    --gradient-card-blue: linear-gradient(135deg, #3b82f6, #1e40af);
+    --gradient-card-green: linear-gradient(135deg, #10b981, #065f46);
+    --gradient-card-yellow: linear-gradient(135deg, #f59e0b, #92400e);
+    --gradient-card-red: linear-gradient(135deg, #ef4444, #991b1b);
+    --gradient-card-purple: linear-gradient(135deg, #8b5cf6, #5b21b6);
+    --gradient-card-pink: linear-gradient(135deg, #ec4899, #9d174d);
+    --gradient-card-cyan: linear-gradient(135deg, #06b6d4, #155e75);
+    --gradient-card-orange: linear-gradient(135deg, #f97316, #9a3412);
+}
+
+/* --------------------------------------------------------------------------
+   Utility Classes - Akan ditambahkan di utilities.css nanti
+   -------------------------------------------------------------------------- */

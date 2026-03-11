@@ -1,0 +1,494 @@
+/* ==========================================================================
+   Forms - GMT Repack
+   Input fields, search, select, checkbox, radio, dan form elements
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Form Group
+   -------------------------------------------------------------------------- */
+.form-group {
+    margin-bottom: var(--spacing-4);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+}
+
+.dark .form-label {
+    color: var(--dark-text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   Input Base
+   -------------------------------------------------------------------------- */
+.form-input {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.dark .form-input {
+    background: var(--dark-bg-tertiary);
+    border-color: var(--dark-border);
+    color: var(--dark-text-primary);
+}
+
+.form-input:hover {
+    border-color: var(--color-primary-400);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary-600);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.dark .form-input:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-input::placeholder {
+    color: var(--text-tertiary);
+    opacity: 0.7;
+}
+
+.dark .form-input::placeholder {
+    color: var(--dark-text-tertiary);
+}
+
+.form-input:disabled {
+    background: var(--bg-tertiary);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* --------------------------------------------------------------------------
+   Input Sizes
+   -------------------------------------------------------------------------- */
+.form-input-sm {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-xs);
+    border-radius: var(--radius-base);
+}
+
+.form-input-lg {
+    padding: var(--spacing-4) var(--spacing-6);
+    font-size: var(--font-size-base);
+    border-radius: var(--radius-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Input with Icon
+   -------------------------------------------------------------------------- */
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    transition: color var(--transition-fast) var(--transition-timing);
+}
+
+.input-icon-left {
+    left: var(--spacing-4);
+}
+
+.input-icon-right {
+    right: var(--spacing-4);
+}
+
+.input-with-icon-left {
+    padding-left: calc(var(--spacing-4) * 2 + 16px);
+}
+
+.input-with-icon-right {
+    padding-right: calc(var(--spacing-4) * 2 + 16px);
+}
+
+.input-wrapper:focus-within .input-icon {
+    color: var(--color-primary-600);
+}
+
+/* --------------------------------------------------------------------------
+   Search Input
+   -------------------------------------------------------------------------- */
+.search-wrapper {
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4) var(--spacing-3) calc(var(--spacing-4) * 2 + 16px);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.dark .search-input {
+    background: rgba(31, 41, 55, 0.7);
+    border-color: rgba(75, 85, 99, 0.5);
+    color: var(--dark-text-primary);
+}
+
+.search-input:focus {
+    outline: none;
+    background: var(--bg-primary);
+    border-color: var(--color-primary-600);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.dark .search-input:focus {
+    background: rgba(31, 41, 55, 0.95);
+}
+
+.search-icon {
+    position: absolute;
+    left: var(--spacing-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    transition: color var(--transition-fast) var(--transition-timing);
+}
+
+.search-wrapper:focus-within .search-icon {
+    color: var(--color-primary-600);
+}
+
+.search-spinner {
+    position: absolute;
+    right: var(--spacing-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-primary-600);
+    animation: spin 1s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Select
+   -------------------------------------------------------------------------- */
+.form-select {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4);
+    padding-right: calc(var(--spacing-4) * 2);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-4) center;
+    background-size: 16px;
+    transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.dark .form-select {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-border);
+    color: var(--dark-text-primary);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.form-select:hover {
+    border-color: var(--color-primary-400);
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--color-primary-600);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-select:disabled {
+    background-color: var(--bg-tertiary);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* --------------------------------------------------------------------------
+   Textarea
+   -------------------------------------------------------------------------- */
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    min-height: 100px;
+    resize: vertical;
+    transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.dark .form-textarea {
+    background: var(--dark-bg-tertiary);
+    border-color: var(--dark-border);
+    color: var(--dark-text-primary);
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--color-primary-600);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Checkbox
+   -------------------------------------------------------------------------- */
+.form-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    cursor: pointer;
+}
+
+.form-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-primary);
+    appearance: none;
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-timing);
+    position: relative;
+}
+
+.dark .form-checkbox input[type="checkbox"] {
+    background: var(--dark-bg-tertiary);
+    border-color: var(--dark-border);
+}
+
+.form-checkbox input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600));
+    border-color: transparent;
+}
+
+.form-checkbox input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.form-checkbox input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.form-checkbox input[type="checkbox"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   Radio
+   -------------------------------------------------------------------------- */
+.form-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    cursor: pointer;
+}
+
+.form-radio input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--bg-primary);
+    appearance: none;
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-timing);
+    position: relative;
+}
+
+.dark .form-radio input[type="radio"] {
+    background: var(--dark-bg-tertiary);
+    border-color: var(--dark-border);
+}
+
+.form-radio input[type="radio"]:checked {
+    border-color: var(--color-primary-600);
+    border-width: 5px;
+}
+
+.form-radio input[type="radio"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Toggle Switch
+   -------------------------------------------------------------------------- */
+.form-toggle {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.form-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    transition: var(--transition-fast) var(--transition-timing);
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: var(--transition-fast) var(--transition-timing);
+    box-shadow: var(--shadow-sm);
+}
+
+input:checked + .toggle-slider {
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600));
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(24px);
+}
+
+input:focus + .toggle-slider {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Form Validation States
+   -------------------------------------------------------------------------- */
+.form-input.is-valid {
+    border-color: var(--color-success);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2310b981'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-4) center;
+    background-size: 16px;
+    padding-right: calc(var(--spacing-4) * 2 + 16px);
+}
+
+.form-input.is-invalid {
+    border-color: var(--color-danger);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ef4444'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-4) center;
+    background-size: 16px;
+    padding-right: calc(var(--spacing-4) * 2 + 16px);
+}
+
+.form-error {
+    margin-top: var(--spacing-2);
+    font-size: var(--font-size-xs);
+    color: var(--color-danger);
+}
+
+.form-success {
+    margin-top: var(--spacing-2);
+    font-size: var(--font-size-xs);
+    color: var(--color-success);
+}
+
+/* --------------------------------------------------------------------------
+   Form Help Text
+   -------------------------------------------------------------------------- */
+.form-help {
+    margin-top: var(--spacing-2);
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+}
+
+/* --------------------------------------------------------------------------
+   Form Actions
+   -------------------------------------------------------------------------- */
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-8);
+    padding-top: var(--spacing-6);
+    border-top: 1px solid var(--border-color);
+}
+
+/* --------------------------------------------------------------------------
+   Form Horizontal
+   -------------------------------------------------------------------------- */
+.form-horizontal .form-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+.form-horizontal .form-label {
+    width: 150px;
+    margin-bottom: 0;
+    text-align: right;
+}
+
+.form-horizontal .form-input,
+.form-horizontal .form-select {
+    flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Form Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    .form-horizontal .form-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .form-horizontal .form-label {
+        width: auto;
+        text-align: left;
+        margin-bottom: var(--spacing-2);
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,375 @@
+/* ==========================================================================
+   Cards - GMT Repack
+   Stat cards, employee cards, glass cards, dan semua variasi card
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Base Card
+   -------------------------------------------------------------------------- */
+.card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base) var(--transition-timing);
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.dark .card {
+    background: var(--dark-bg-secondary);
+    border-color: var(--dark-border);
+}
+
+/* --------------------------------------------------------------------------
+   Glass Card (Glassmorphism)
+   -------------------------------------------------------------------------- */
+.card-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.card-glass:hover {
+    box-shadow: var(--shadow-glass-hover);
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.dark .card-glass {
+    background: rgba(17, 24, 39, 0.7);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark .card-glass:hover {
+    background: rgba(31, 41, 55, 0.8);
+}
+
+/* --------------------------------------------------------------------------
+   Stat Cards (Dashboard)
+   -------------------------------------------------------------------------- */
+.stat-card {
+    composes: card-glass;
+    padding: var(--spacing-5);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
+}
+
+.stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.stat-icon-blue {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.stat-icon-green {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-icon-yellow {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.stat-icon-red {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.stat-icon-purple {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.stat-card .stat-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-card .stat-value {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+/* --------------------------------------------------------------------------
+   Employee Cards (Grid View)
+   -------------------------------------------------------------------------- */
+.employee-card {
+    composes: card-glass;
+    position: relative;
+    cursor: pointer;
+}
+
+.employee-card:hover {
+    transform: translateY(-8px);
+}
+
+.employee-card .card-header {
+    height: 96px;
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600));
+    position: relative;
+    overflow: hidden;
+}
+
+.employee-card .card-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+}
+
+.employee-card .card-avatar {
+    position: absolute;
+    bottom: -32px;
+    left: 24px;
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-lg);
+    border: 4px solid var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: white;
+    box-shadow: var(--shadow-xl);
+    z-index: 1;
+}
+
+.dark .employee-card .card-avatar {
+    border-color: var(--dark-bg-secondary);
+}
+
+.employee-card .card-body {
+    padding: var(--spacing-8) var(--spacing-6) var(--spacing-6);
+}
+
+.employee-card .card-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-1);
+}
+
+.employee-card .card-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+    margin-bottom: var(--spacing-4);
+}
+
+.employee-card .card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    padding: var(--spacing-1) var(--spacing-3);
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary-600);
+}
+
+/* --------------------------------------------------------------------------
+   Hover Card Preview
+   -------------------------------------------------------------------------- */
+.hover-preview {
+    position: fixed;
+    z-index: var(--z-tooltip);
+    width: 300px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4);
+    box-shadow: var(--shadow-2xl);
+    border: 1px solid var(--glass-border);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-fast) var(--transition-timing);
+}
+
+.hover-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.hover-card:hover .hover-preview {
+    opacity: 1;
+}
+
+.hover-preview .preview-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: white;
+    box-shadow: var(--shadow-xl);
+}
+
+.hover-preview .preview-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.hover-preview .preview-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+}
+
+.hover-preview .preview-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    padding: var(--spacing-2) 0;
+}
+
+.hover-preview .preview-info svg {
+    width: 16px;
+    height: 16px;
+    color: var(--text-tertiary);
+}
+
+/* --------------------------------------------------------------------------
+   Card dengan Icon
+   -------------------------------------------------------------------------- */
+.card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
+    color: var(--color-primary-600);
+}
+
+.dark .card-icon {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+}
+
+/* --------------------------------------------------------------------------
+   Card dengan Image
+   -------------------------------------------------------------------------- */
+.card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-image-top {
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+}
+
+.card-image-bottom {
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Card dengan Footer
+   -------------------------------------------------------------------------- */
+.card-footer {
+    padding: var(--spacing-4) var(--spacing-6);
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+}
+
+.dark .card-footer {
+    background: var(--dark-bg-tertiary);
+    border-color: var(--dark-border);
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Cards
+   -------------------------------------------------------------------------- */
+.card-interactive {
+    cursor: pointer;
+    transition: all var(--transition-base) var(--transition-timing);
+}
+
+.card-interactive:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.card-interactive:active {
+    transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Card Grid Layout
+   -------------------------------------------------------------------------- */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-6);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Cards
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    .stat-card {
+        padding: var(--spacing-4);
+    }
+    
+    .stat-card .stat-value {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .employee-card .card-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: var(--font-size-xl);
+        bottom: -24px;
+        left: 16px;
+    }
+    
+    .employee-card .card-body {
+        padding: var(--spacing-6) var(--spacing-4) var(--spacing-4);
+    }
+    
+    .hover-preview {
+        width: 260px;
+    }
+}

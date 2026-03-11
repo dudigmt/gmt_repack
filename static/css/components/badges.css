@@ -1,0 +1,300 @@
+/* ==========================================================================
+   Badges - GMT Repack
+   Status badges, labels, tags, dan pill components
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Base Badge
+   -------------------------------------------------------------------------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    padding: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.badge-sm {
+    padding: 2px var(--spacing-2);
+    font-size: 10px;
+}
+
+.badge-lg {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+}
+
+/* --------------------------------------------------------------------------
+   Badge Variants - Solid
+   -------------------------------------------------------------------------- */
+.badge-primary {
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
+    color: white;
+}
+
+.badge-secondary {
+    background: linear-gradient(135deg, var(--color-secondary-600), var(--color-secondary-700));
+    color: white;
+}
+
+.badge-success {
+    background: linear-gradient(135deg, var(--color-success), var(--color-success-dark));
+    color: white;
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, var(--color-warning), var(--color-warning-dark));
+    color: white;
+}
+
+.badge-danger {
+    background: linear-gradient(135deg, var(--color-danger), var(--color-danger-dark));
+    color: white;
+}
+
+.badge-info {
+    background: linear-gradient(135deg, var(--color-info), var(--color-info-dark));
+    color: white;
+}
+
+/* --------------------------------------------------------------------------
+   Badge Variants - Light
+   -------------------------------------------------------------------------- */
+.badge-light-primary {
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+}
+
+.dark .badge-light-primary {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--color-primary-400);
+}
+
+.badge-light-success {
+    background: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
+.dark .badge-light-success {
+    background: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+}
+
+.badge-light-warning {
+    background: var(--color-warning-light);
+    color: var(--color-warning-dark);
+}
+
+.dark .badge-light-warning {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fcd34d;
+}
+
+.badge-light-danger {
+    background: var(--color-danger-light);
+    color: var(--color-danger-dark);
+}
+
+.dark .badge-light-danger {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.badge-light-info {
+    background: var(--color-info-light);
+    color: var(--color-info-dark);
+}
+
+.dark .badge-light-info {
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+}
+
+/* --------------------------------------------------------------------------
+   Badge Variants - Outline
+   -------------------------------------------------------------------------- */
+.badge-outline-primary {
+    background: transparent;
+    border: 1px solid var(--color-primary-600);
+    color: var(--color-primary-600);
+}
+
+.dark .badge-outline-primary {
+    border-color: var(--color-primary-400);
+    color: var(--color-primary-400);
+}
+
+.badge-outline-success {
+    background: transparent;
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+}
+
+.badge-outline-warning {
+    background: transparent;
+    border: 1px solid var(--color-warning);
+    color: var(--color-warning);
+}
+
+.badge-outline-danger {
+    background: transparent;
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+}
+
+/* --------------------------------------------------------------------------
+   Badge dengan Icon
+   -------------------------------------------------------------------------- */
+.badge-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.badge-icon-left {
+    margin-right: var(--spacing-1);
+}
+
+.badge-icon-right {
+    margin-left: var(--spacing-1);
+}
+
+/* --------------------------------------------------------------------------
+   Status Badges (untuk employee status)
+   -------------------------------------------------------------------------- */
+.status-active {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.status-probation {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+}
+
+.status-terminated {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.status-resigned {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    color: white;
+}
+
+.status-retired {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+}
+
+.status-kontrak {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+.status-tetap {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.status-harian {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+}
+
+/* Light version untuk status */
+.status-active-light {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.dark .status-active-light {
+    background: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+}
+
+.status-probation-light {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dark .status-probation-light {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fcd34d;
+}
+
+.status-terminated-light {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.dark .status-terminated-light {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+/* --------------------------------------------------------------------------
+   Badge dengan Dot
+   -------------------------------------------------------------------------- */
+.badge-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.badge-dot::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   Badge Group
+   -------------------------------------------------------------------------- */
+.badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+}
+
+/* --------------------------------------------------------------------------
+   Badge dengan Hover Effect
+   -------------------------------------------------------------------------- */
+.badge-interactive {
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.badge-interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   Counter Badge
+   -------------------------------------------------------------------------- */
+.badge-counter {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 var(--spacing-1);
+    font-size: 10px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-danger), var(--color-danger-dark));
+    color: white;
+    border: 2px solid var(--bg-primary);
+}
+
+.dark .badge-counter {
+    border-color: var(--dark-bg-secondary);
+}

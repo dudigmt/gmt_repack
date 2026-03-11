@@ -4,87 +4,66 @@
 
 {% block title %}Daftar Karyawan - GMT Repack{% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/employee-list.css' %}">
-<style>
-    /* Fallback styling jika CSS belum diload */
-    .loading-skeleton {
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: .5; }
-    }
-</style>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hr/employee-list.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="employee-container space-y-6" id="employeeApp">
-    <!-- Header dengan Title dan Actions -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 fade-in">
+<div class="employee-container" id="employeeApp">
+    <!-- Header -->
+    <div class="page-header">
         <div>
-            <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Daftar Karyawan
-            </h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                Kelola data karyawan dengan mudah dan cepat
-            </p>
+            <h1 class="page-title">Daftar Karyawan</h1>
+            <p class="page-description">Kelola data karyawan dengan mudah dan cepat</p>
         </div>
         
         <div class="flex items-center gap-3">
-            <!-- Column Visibility Toggle -->
-            <div class="relative" x-data="{ open: false }">
-                <button @click="open = !open" class="view-toggle-btn px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 transition-all">
+            <!-- Column Visibility Dropdown -->
+            <div class="dropdown">
+                <button class="btn btn-ghost" id="columnToggle">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
                     </svg>
                     <span class="hidden sm:inline">Kolom</span>
                 </button>
                 
-                <div x-show="open" @click.away="open = false" class="column-dropdown" style="display: none;">
-                    <div class="py-2">
-                        <label class="column-item">
-                            <input type="checkbox" checked class="rounded text-blue-600" data-column="nik"> NIK
-                        </label>
-                        <label class="column-item">
-                            <input type="checkbox" checked class="rounded text-blue-600" data-column="nama"> Nama
-                        </label>
-                        <label class="column-item">
-                            <input type="checkbox" checked class="rounded text-blue-600" data-column="department"> Department
-                        </label>
-                        <label class="column-item">
-                            <input type="checkbox" checked class="rounded text-blue-600" data-column="position"> Posisi
-                        </label>
-                        <label class="column-item">
-                            <input type="checkbox" checked class="rounded text-blue-600" data-column="status"> Status
-                        </label>
-                        <label class="column-item">
-                            <input type="checkbox" class="rounded text-blue-600" data-column="phone"> No HP
-                        </label>
-                        <label class="column-item">
-                            <input type="checkbox" class="rounded text-blue-600" data-column="ktp"> No KTP
-                        </label>
-                    </div>
+                <div class="dropdown-content dropdown-left hidden" id="columnDropdown">
+                    <div class="dropdown-header">Tampilkan Kolom</div>
+                    <label class="column-item">
+                        <input type="checkbox" checked data-column="nik"> NIK
+                    </label>
+                    <label class="column-item">
+                        <input type="checkbox" checked data-column="nama"> Nama
+                    </label>
+                    <label class="column-item">
+                        <input type="checkbox" checked data-column="department"> Department
+                    </label>
+                    <label class="column-item">
+                        <input type="checkbox" checked data-column="position"> Posisi
+                    </label>
+                    <label class="column-item">
+                        <input type="checkbox" checked data-column="status"> Status
+                    </label>
                 </div>
             </div>
             
             <!-- Export Dropdown -->
-            <div class="relative" x-data="{ open: false }">
-                <button @click="open = !open" class="view-toggle-btn px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-blue-500 transition-all">
+            <div class="dropdown">
+                <button class="btn btn-ghost" id="exportBtn">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
                     <span class="hidden sm:inline">Export</span>
                 </button>
                 
-                <div x-show="open" @click.away="open = false" class="export-dropdown" style="display: none;">
-                    <a href="{% url 'hr:export_employees' %}?format=excel" class="export-item">
+                <div class="export-dropdown hidden" id="exportDropdown">
+                    <a href="#" data-export="excel" class="export-item">
                         <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         Export to Excel
                     </a>
-                    <a href="{% url 'hr:export_employees' %}?format=csv" class="export-item">
+                    <a href="#" data-export="csv" class="export-item">
                         <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
@@ -93,15 +72,15 @@
                 </div>
             </div>
             
-            <!-- View Toggle (Table/Grid) -->
+            <!-- View Toggle -->
             <div class="view-toggle">
-                <a href="?view=table&{{ params|urlencode }}" class="view-toggle-btn {% if view_mode == 'table' %}active{% endif %}">
+                <a href="?view=table" class="view-toggle-btn {% if view_mode == 'table' %}active{% endif %}" data-view="table">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                     <span class="hidden sm:inline">Table</span>
                 </a>
-                <a href="?view=grid&{{ params|urlencode }}" class="view-toggle-btn {% if view_mode == 'grid' %}active{% endif %}">
+                <a href="?view=grid" class="view-toggle-btn {% if view_mode == 'grid' %}active{% endif %}" data-view="grid">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                     </svg>
@@ -109,8 +88,8 @@
                 </a>
             </div>
             
-            <!-- Advanced Filter Button -->
-            <button onclick="openFilterModal()" class="view-toggle-btn px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-lg transition-all">
+            <!-- Filter Button -->
+            <button class="btn btn-primary" id="openFilterModal">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                 </svg>
@@ -119,9 +98,8 @@
         </div>
     </div>
 
-    <!-- Statistik Cards dengan Glassmorphism -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 fade-in">
-        <!-- Total -->
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
         <div class="stat-card">
             <div class="flex items-center">
                 <div class="stat-icon stat-icon-blue">
@@ -130,13 +108,12 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.total }}</p>
+                    <p class="stat-label">Total</p>
+                    <p class="stat-value">{{ stats.total }}</p>
                 </div>
             </div>
         </div>
         
-        <!-- Active -->
         <div class="stat-card">
             <div class="flex items-center">
                 <div class="stat-icon stat-icon-green">
@@ -145,13 +122,12 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Aktif</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.active }}</p>
+                    <p class="stat-label">Aktif</p>
+                    <p class="stat-value">{{ stats.active }}</p>
                 </div>
             </div>
         </div>
         
-        <!-- Probation -->
         <div class="stat-card">
             <div class="flex items-center">
                 <div class="stat-icon stat-icon-yellow">
@@ -160,13 +136,12 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Probation</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.probation }}</p>
+                    <p class="stat-label">Probation</p>
+                    <p class="stat-value">{{ stats.probation }}</p>
                 </div>
             </div>
         </div>
         
-        <!-- Kontrak (mapping dari probation untuk sementara) -->
         <div class="stat-card">
             <div class="flex items-center">
                 <div class="stat-icon stat-icon-blue">
@@ -176,13 +151,12 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Kontrak</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.probation }}</p>
+                    <p class="stat-label">Kontrak</p>
+                    <p class="stat-value">{{ stats.probation }}</p>
                 </div>
             </div>
         </div>
         
-        <!-- Resigned -->
         <div class="stat-card">
             <div class="flex items-center">
                 <div class="stat-icon stat-icon-red">
@@ -191,13 +165,12 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Resigned</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.resigned }}</p>
+                    <p class="stat-label">Resigned</p>
+                    <p class="stat-value">{{ stats.resigned }}</p>
                 </div>
             </div>
         </div>
         
-        <!-- Terminated -->
         <div class="stat-card">
             <div class="flex items-center">
                 <div class="stat-icon stat-icon-red">
@@ -206,15 +179,15 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Terminated</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.terminated }}</p>
+                    <p class="stat-label">Terminated</p>
+                    <p class="stat-value">{{ stats.terminated }}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Search dan Filter Cepat dengan Debounce -->
-    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between fade-in">
+    <!-- Search dan Filter Chips -->
+    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
         <div class="w-full lg:w-96 search-wrapper">
             <input type="text" 
                    id="searchInput"
@@ -225,9 +198,8 @@
             <svg class="search-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
-            <!-- Loading spinner untuk debounce -->
-            <div id="searchSpinner" class="absolute right-4 top-3 hidden">
-                <svg class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
+            <div id="searchSpinner" class="search-spinner hidden">
+                <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -270,37 +242,39 @@
         </div>
     </div>
 
-    <!-- Loading Skeleton (ditampilkan saat loading) -->
+    <!-- Loading Skeleton -->
     <div id="loadingSkeleton" class="hidden">
         {% if view_mode == 'table' %}
         <div class="table-container">
             <div class="overflow-x-auto">
-                <table class="min-w-full">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th class="table-header">No</th>
-                            <th class="table-header">NIK</th>
-                            <th class="table-header">Karyawan</th>
-                            <th class="table-header">Department</th>
-                            <th class="table-header">Status</th>
+                            <th>No</th>
+                            <th>NIK</th>
+                            <th>Karyawan</th>
+                            <th>Department</th>
+                            <th>Posisi</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for i in "12345"|make_list %}
-                        <tr class="table-row">
-                            <td class="px-6 py-4"><div class="skeleton-line w-8 h-4"></div></td>
-                            <td class="px-6 py-4"><div class="skeleton-line w-24 h-4"></div></td>
-                            <td class="px-6 py-4">
+                        <tr>
+                            <td><div class="skeleton-line w-8 h-4"></div></td>
+                            <td><div class="skeleton-line w-24 h-4"></div></td>
+                            <td>
                                 <div class="flex items-center">
-                                    <div class="skeleton-line w-10 h-10 rounded-full"></div>
+                                    <div class="skeleton-circle w-10 h-10"></div>
                                     <div class="ml-4 space-y-2">
                                         <div class="skeleton-line w-32 h-4"></div>
                                         <div class="skeleton-line w-24 h-3"></div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4"><div class="skeleton-line w-20 h-4"></div></td>
-                            <td class="px-6 py-4"><div class="skeleton-line w-16 h-6 rounded-full"></div></td>
+                            <td><div class="skeleton-line w-20 h-4"></div></td>
+                            <td><div class="skeleton-line w-20 h-4"></div></td>
+                            <td><div class="skeleton-line w-16 h-6 rounded-full"></div></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -313,11 +287,10 @@
             <div class="employee-card">
                 <div class="card-header skeleton-line"></div>
                 <div class="card-body">
-                    <div class="skeleton-line w-16 h-16 rounded-xl mx-auto -mt-12 mb-4"></div>
+                    <div class="skeleton-circle w-16 h-16 mx-auto -mt-12 mb-4"></div>
                     <div class="skeleton-line w-32 h-5 mx-auto mb-2"></div>
                     <div class="skeleton-line w-24 h-4 mx-auto mb-4"></div>
                     <div class="flex justify-center space-x-2">
-                        <div class="skeleton-line w-16 h-6 rounded-full"></div>
                         <div class="skeleton-line w-16 h-6 rounded-full"></div>
                     </div>
                 </div>
@@ -327,295 +300,34 @@
         {% endif %}
     </div>
 
-    <!-- Content Container (Table/Grid) -->
-    <div id="contentContainer" class="fade-in">
+    <!-- Content Container -->
+    <div id="contentContainer">
         {% if view_mode == 'table' %}
-            <!-- Table View -->
-            <div class="table-container">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full">
-                        <thead>
-                            <tr>
-                                <th class="table-header w-16">No</th>
-                                <th class="table-header">
-                                    <a href="?sort=employee_id&order={% if sort_by == 'employee_id' and order == 'asc' %}desc{% else %}asc{% endif %}&{{ params|urlencode }}" 
-                                       class="flex items-center hover:text-blue-600 transition-colors">
-                                        NIK
-                                        {% if sort_by == 'employee_id' %}
-                                            <span class="ml-1">{% if order == 'asc' %}↑{% else %}↓{% endif %}</span>
-                                        {% endif %}
-                                    </a>
-                                </th>
-                                <th class="table-header">Karyawan</th>
-                                <th class="table-header">
-                                    <a href="?sort=department__name&order={% if sort_by == 'department__name' and order == 'asc' %}desc{% else %}asc{% endif %}&{{ params|urlencode }}" 
-                                       class="flex items-center hover:text-blue-600 transition-colors">
-                                        Department
-                                        {% if sort_by == 'department__name' %}
-                                            <span class="ml-1">{% if order == 'asc' %}↑{% else %}↓{% endif %}</span>
-                                        {% endif %}
-                                    </a>
-                                </th>
-                                <th class="table-header">Posisi</th>
-                                <th class="table-header">
-                                    <a href="?sort=employment_status&order={% if sort_by == 'employment_status' and order == 'asc' %}desc{% else %}asc{% endif %}&{{ params|urlencode }}" 
-                                       class="flex items-center hover:text-blue-600 transition-colors">
-                                        Status
-                                        {% if sort_by == 'employment_status' %}
-                                            <span class="ml-1">{% if order == 'asc' %}↑{% else %}↓{% endif %}</span>
-                                        {% endif %}
-                                    </a>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            {% for employee in page_obj %}
-                            <tr class="table-row hover-card" 
-                                data-nama="{{ employee.nama }}"
-                                data-nik="{{ employee.employee_id }}"
-                                data-dept="{{ employee.department.name|default:'-' }}"
-                                data-posisi="{{ employee.position.title|default:'-' }}"
-                                data-status="{{ employee.employment_status }}"
-                                data-avatar="{{ employee.department|avatar_color }}">
-                                <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
-                                    {{ page_obj.start_index|add:forloop.counter0 }}
-                                </td>
-                                <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
-                                    {{ employee.employee_id|default:'-' }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center">
-                                        <!-- Avatar Inisial dengan Gradient -->
-                                        <div class="flex-shrink-0 h-10 w-10 rounded-full {{ employee.department|avatar_color }} flex items-center justify-center text-white font-semibold text-sm shadow-lg">
-                                            {{ employee|initials }}
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                {{ employee.nama }}
-                                            </div>
-                                            <div class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-2">
-                                                <span>{{ employee.no_hp|default:'-'|format_phone }}</span>
-                                                {% if employee.no_ktp %}
-                                                <span class="w-1 h-1 rounded-full bg-gray-400"></span>
-                                                <span class="text-xs">{{ employee.no_ktp|mask_ktp }}</span>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
-                                    <div class="flex items-center gap-2">
-                                        {% department_icon employee.department.name as dept_icon %}
-                                        {{ dept_icon|safe }}
-                                        {{ employee.department.name|default:'-' }}
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
-                                    {{ employee.position.title|default:'-' }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="px-3 py-1 inline-flex items-center text-xs font-semibold rounded-full {{ employee.employment_status|status_badge_class }}">
-                                        {{ employee.employment_status|status_icon|safe }}
-                                        {% if employee.employment_status == 'active' %}Aktif
-                                        {% elif employee.employment_status == 'probation' %}Probation
-                                        {% elif employee.employment_status == 'terminated' %}Terminated
-                                        {% elif employee.employment_status == 'resigned' %}Resigned
-                                        {% elif employee.employment_status == 'retired' %}Retired
-                                        {% else %}{{ employee.employment_status|title }}
-                                        {% endif %}
-                                    </span>
-                                </td>
-                                
-                                <!-- Hover Card Preview -->
-                                <div class="hover-preview" style="display: none;">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="flex-shrink-0 h-16 w-16 rounded-full {{ employee.department|avatar_color }} flex items-center justify-center text-white font-bold text-2xl shadow-xl">
-                                            {{ employee|initials }}
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-lg">{{ employee.nama }}</h3>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ employee.employee_id }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 space-y-2">
-                                        <div class="flex items-center gap-2 text-sm">
-                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                            </svg>
-                                            <span>{{ employee.department.name|default:'-' }} - {{ employee.position.title|default:'-' }}</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm">
-                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                            </svg>
-                                            <span>{{ employee.no_hp|default:'-'|format_phone }}</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm">
-                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
-                                            <span>Bergabung: {{ employee.tgl_rekrut|format_date|default:'-' }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="6" class="px-6 py-16">
-                                    <div class="empty-state">
-                                        <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
-                                        </svg>
-                                        <h3 class="empty-state-title">Belum Ada Data Karyawan</h3>
-                                        <p class="text-gray-500 dark:text-gray-400 mb-4">Mulai dengan mengimport data karyawan dari Excel</p>
-                                        <a href="{% url 'admin:hr_employee_changelist' %}" 
-                                           class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:shadow-lg transition-all">
-                                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-                                            </svg>
-                                            Import Excel
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            {% include 'hr/includes/employee_table.html' %}
         {% else %}
-            <!-- Grid/Card View -->
-            <div class="employee-grid">
-                {% for employee in page_obj %}
-                <div class="employee-card hover-card"
-                     data-nama="{{ employee.nama }}"
-                     data-nik="{{ employee.employee_id }}"
-                     data-dept="{{ employee.department.name|default:'-' }}"
-                     data-posisi="{{ employee.position.title|default:'-' }}"
-                     data-status="{{ employee.employment_status }}"
-                     data-avatar="{{ employee.department|avatar_color }}">
-                    
-                    <!-- Card Header dengan Gradient -->
-                    <div class="card-header bg-gradient-to-r {{ employee.department.name|get_department_color }}"></div>
-                    
-                    <!-- Avatar -->
-                    <div class="card-avatar {{ employee.department|avatar_color }}">
-                        {{ employee|initials }}
-                    </div>
-                    
-                    <!-- Card Body -->
-                    <div class="card-body text-center">
-                        <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-1">{{ employee.nama }}</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">{{ employee.employee_id }}</p>
-                        
-                        <div class="flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-300 mb-3">
-                            {% department_icon employee.department.name as dept_icon %}
-                            {{ dept_icon|safe }}
-                            <span>{{ employee.department.name|default:'-' }}</span>
-                        </div>
-                        
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">{{ employee.position.title|default:'-' }}</p>
-                        
-                        <!-- Status Badge -->
-                        <span class="px-3 py-1 inline-flex items-center text-xs font-semibold rounded-full {{ employee.employment_status|status_badge_class }}">
-                            {{ employee.employment_status|status_icon|safe }}
-                            {% if employee.employment_status == 'active' %}Aktif
-                            {% elif employee.employment_status == 'probation' %}Probation
-                            {% elif employee.employment_status == 'terminated' %}Terminated
-                            {% elif employee.employment_status == 'resigned' %}Resigned
-                            {% else %}{{ employee.employment_status|title }}
-                            {% endif %}
-                        </span>
-                        
-                        <!-- Contact Info -->
-                        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                </svg>
-                                <span>{{ employee.no_hp|default:'-'|format_phone }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Hover Card Preview (sama seperti di table) -->
-                    <div class="hover-preview" style="display: none;">
-                        <!-- Copy dari hover preview table -->
-                    </div>
-                </div>
-                {% empty %}
-                <div class="col-span-full">
-                    <div class="empty-state">
-                        <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
-                        </svg>
-                        <h3 class="empty-state-title">Belum Ada Data Karyawan</h3>
-                        <p class="text-gray-500 dark:text-gray-400 mb-4">Mulai dengan mengimport data karyawan dari Excel</p>
-                        <a href="{% url 'admin:hr_employee_changelist' %}" 
-                           class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl hover:shadow-lg transition-all">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-                            </svg>
-                            Import Excel
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-        
-        <!-- Pagination -->
-        {% if page_obj.paginator.num_pages > 1 %}
-        <div class="mt-6 flex items-center justify-between">
-            <div class="text-sm text-gray-700 dark:text-gray-300">
-                Menampilkan {{ page_obj.start_index }} - {{ page_obj.end_index }} dari {{ page_obj.paginator.count }} data
-            </div>
-            
-            <div class="flex gap-2">
-                {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}&{{ params|urlencode }}" 
-                   class="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all">
-                    Previous
-                </a>
-                {% endif %}
-                
-                {% for i in page_obj.paginator.page_range %}
-                    {% if i == page_obj.number %}
-                    <span class="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-                        {{ i }}
-                    </span>
-                    {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
-                    <a href="?page={{ i }}&{{ params|urlencode }}" 
-                       class="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all">
-                        {{ i }}
-                    </a>
-                    {% endif %}
-                {% endfor %}
-                
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}&{{ params|urlencode }}" 
-                   class="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all">
-                    Next
-                </a>
-                {% endif %}
-            </div>
-        </div>
+            {% include 'hr/includes/employee_grid.html' %}
         {% endif %}
     </div>
 
-    <!-- Advanced Filter Modal -->
-    <div id="filterModal" class="filter-modal" style="display: none;">
-        <div class="modal-content">
+    <!-- Filter Modal -->
+    <div id="filterModal" class="modal-backdrop" style="display: none;">
+        <div class="modal">
             <div class="modal-header">
-                <h3 class="text-lg font-semibold text-white">Advanced Filter</h3>
+                <h3 class="modal-title">Advanced Filter</h3>
+                <button class="modal-close" id="closeFilterModal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
+            
             <div class="modal-body">
                 <form method="get" id="filterForm">
                     <input type="hidden" name="view" value="{{ view_mode }}">
                     
                     <div class="filter-group">
                         <label class="filter-label">Department</label>
-                        <select name="department" class="filter-select">
+                        <select name="department" class="form-select" id="filterDepartment">
                             <option value="">Semua Department</option>
                             {% for dept in departments %}
                             <option value="{{ dept.id }}" {% if department_filter == dept.id %}selected{% endif %}>
@@ -627,7 +339,7 @@
                     
                     <div class="filter-group">
                         <label class="filter-label">Posisi</label>
-                        <select name="position" class="filter-select">
+                        <select name="position" class="form-select" id="filterPosition">
                             <option value="">Semua Posisi</option>
                             {% for pos in positions %}
                             <option value="{{ pos.id }}" {% if position_filter == pos.id %}selected{% endif %}>
@@ -639,185 +351,26 @@
                     
                     <div class="filter-group">
                         <label class="filter-label">Status</label>
-                        <select name="status" class="filter-select">
+                        <select name="status" class="form-select">
                             <option value="">Semua Status</option>
                             <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Aktif</option>
                             <option value="probation" {% if status_filter == 'probation' %}selected{% endif %}>Probation</option>
                             <option value="terminated" {% if status_filter == 'terminated' %}selected{% endif %}>Terminated</option>
                             <option value="resigned" {% if status_filter == 'resigned' %}selected{% endif %}>Resigned</option>
-                            <option value="retired" {% if status_filter == 'retired' %}selected{% endif %}>Retired</option>
                         </select>
                     </div>
                     
-                    <div class="flex justify-end gap-3 mt-6">
-                        <button type="button" onclick="closeFilterModal()" 
-                                class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                            Batal
-                        </button>
-                        <button type="submit" 
-                                class="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:shadow-lg">
-                            Terapkan Filter
-                        </button>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-ghost" id="cancelFilter">Batal</button>
+                        <button type="submit" class="btn btn-primary">Terapkan Filter</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
 
-<script>
-// Debounce Search dengan Real-time Update
-let searchTimeout;
-const searchInput = document.getElementById('searchInput');
-const searchSpinner = document.getElementById('searchSpinner');
-const contentContainer = document.getElementById('contentContainer');
-const loadingSkeleton = document.getElementById('loadingSkeleton');
-
-searchInput.addEventListener('input', function() {
-    clearTimeout(searchTimeout);
-    const query = this.value;
-    
-    // Tampilkan spinner
-    searchSpinner.classList.remove('hidden');
-    
-    // Sembunyikan konten, tampilkan skeleton
-    contentContainer.classList.add('hidden');
-    loadingSkeleton.classList.remove('hidden');
-    
-    searchTimeout = setTimeout(() => {
-        performSearch(query);
-    }, 500); // Debounce 500ms
-});
-
-function performSearch(query) {
-    const currentUrl = new URL(window.location.href);
-    const params = new URLSearchParams(currentUrl.search);
-    
-    // Update search param
-    if (query) {
-        params.set('search', query);
-    } else {
-        params.delete('search');
-    }
-    params.set('page', '1'); // Reset ke halaman 1
-    
-    // Fetch data dengan AJAX
-    fetch(`/hr/employees/?${params.toString()}`, {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => response.text())
-    .then(html => {
-        // Update URL tanpa reload
-        window.history.pushState({}, '', `/hr/employees/?${params.toString()}`);
-        
-        // Update content
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const newContent = doc.getElementById('contentContainer').innerHTML;
-        contentContainer.innerHTML = newContent;
-        
-        // Sembunyikan skeleton, tampilkan konten
-        loadingSkeleton.classList.add('hidden');
-        contentContainer.classList.remove('hidden');
-        searchSpinner.classList.add('hidden');
-        
-        // Re-attach hover listeners
-        attachHoverListeners();
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        loadingSkeleton.classList.add('hidden');
-        contentContainer.classList.remove('hidden');
-        searchSpinner.classList.add('hidden');
-    });
-}
-
-// Hover Card Preview dengan Posisi Dinamis
-function attachHoverListeners() {
-    document.querySelectorAll('.hover-card').forEach(card => {
-        const preview = card.querySelector('.hover-preview');
-        if (!preview) return;
-        
-        card.addEventListener('mousemove', (e) => {
-            const x = e.clientX;
-            const y = e.clientY;
-            const previewWidth = 280;
-            const previewHeight = preview.offsetHeight;
-            
-            // Hitung posisi agar tidak keluar layar
-            let left = x + 20;
-            let top = y - previewHeight / 2;
-            
-            // Cek batas kanan
-            if (left + previewWidth > window.innerWidth) {
-                left = x - previewWidth - 20;
-            }
-            
-            // Cek batas atas
-            if (top < 10) {
-                top = 10;
-            }
-            
-            // Cek batas bawah
-            if (top + previewHeight > window.innerHeight - 10) {
-                top = window.innerHeight - previewHeight - 10;
-            }
-            
-            preview.style.left = left + 'px';
-            preview.style.top = top + 'px';
-            preview.style.display = 'block';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            preview.style.display = 'none';
-        });
-    });
-}
-
-// Column Visibility Toggle
-document.querySelectorAll('[data-column]').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-        const column = this.dataset.column;
-        const cells = document.querySelectorAll(`[data-column="${column}"]`);
-        cells.forEach(cell => {
-            cell.style.display = this.checked ? 'table-cell' : 'none';
-        });
-    });
-});
-
-// Filter Modal
-function openFilterModal() {
-    document.getElementById('filterModal').style.display = 'flex';
-}
-
-function closeFilterModal() {
-    document.getElementById('filterModal').style.display = 'none';
-}
-
-// Close modal when clicking outside
-window.addEventListener('click', function(e) {
-    const modal = document.getElementById('filterModal');
-    if (e.target === modal) {
-        closeFilterModal();
-    }
-});
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-    attachHoverListeners();
-    
-    // Set initial column visibility based on saved preferences
-    // (bisa ditambahkan localStorage nantinya)
-});
-
-// Handle browser back/forward
-window.addEventListener('popstate', function() {
-    window.location.reload();
-});
-</script>
-
-<!-- Include Alpine.js untuk dropdown -->
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+{% block extra_js %}
+<script src="{% static 'js/hr/employee-list.js' %}"></script>
 {% endblock %}

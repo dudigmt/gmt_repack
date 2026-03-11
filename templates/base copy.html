@@ -6,6 +6,8 @@
     <title>{% block title %}GMT Repack{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    {% block extra_head %}{% endblock %}
+    <!-- Dark mode styles (sekarang sudah handle oleh Tailwind) -->
     <style>
         /* Dark mode styles */
         .dark body {
