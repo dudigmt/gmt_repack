@@ -46,7 +46,7 @@ def import_employees_view(request):
             tmp_path = tmp.name
         
         try:
-            # Panggil management command SIMPLE (hanya NIK & Nama)
+            # Panggil management command
             from io import StringIO
             output = StringIO()
             call_command('import_employees', tmp_path, stdout=output)
@@ -61,12 +61,13 @@ def import_employees_view(request):
         
         return redirect('admin:hr_employee_changelist')
     
-    return render(request, 'admin/hr/employee/import_form.html')  # Tampilkan form kalo bukan POST
+    return redirect('admin:hr_employee_changelist')
 
 @staff_member_required
 def employee_list(request):
     """
     View utama untuk menampilkan daftar karyawan dengan semua fitur:
+    - Hanya menampilkan karyawan aktif (tgl_out kosong)
     - Pencarian real-time
     - Filter status
     - Sorting
@@ -80,10 +81,10 @@ def employee_list(request):
     position_filter = request.GET.get('position', '')
     sort_by = request.GET.get('sort', 'employee_id')
     order = request.GET.get('order', 'asc')
-    view_mode = request.GET.get('view', 'table')  # 'table' atau 'grid'
+    view_mode = request.GET.get('view', 'table')  # 'table' atau 'card'
     
-    # Base queryset dengan select_related untuk optimasi
-    employees = Employee.objects.all().select_related('department', 'position')
+    # BASE QUERYSET - HANYA KARYAWAN AKTIF (tgl_out kosong)
+    employees = Employee.objects.filter(tgl_out__isnull=True).select_related('department', 'position')
     
     # Filter berdasarkan pencarian
     if search_query:
@@ -111,14 +112,12 @@ def employee_list(request):
         sort_by = f'-{sort_by}'
     employees = employees.order_by(sort_by)
     
-    # Statistik untuk cards
+    # STATISTIK - HANYA KARYAWAN AKTIF
     stats = {
-        'total': Employee.objects.count(),
-        'active': Employee.objects.filter(employment_status='active').count(),
-        'probation': Employee.objects.filter(employment_status='probation').count(),
-        'terminated': Employee.objects.filter(employment_status='terminated').count(),
-        'resigned': Employee.objects.filter(employment_status='resigned').count(),
-        'retired': Employee.objects.filter(employment_status='retired').count(),
+        'total': Employee.objects.filter(tgl_out__isnull=True).count(),
+        'tetap': Employee.objects.filter(tgl_out__isnull=True, status_karyawan='tetap').count(),
+        'kontrak': Employee.objects.filter(tgl_out__isnull=True, status_karyawan='kontrak').count(),
+        'os': Employee.objects.filter(tgl_out__isnull=True, status_karyawan='os').count(),
     }
     
     # Data untuk filter dropdown
@@ -172,7 +171,8 @@ def employee_search_api(request):
     position_filter = data.get('position', '')
     page = int(data.get('page', 1))
     
-    employees = Employee.objects.all().select_related('department', 'position')
+    # BASE QUERYSET - HANYA KARYAWAN AKTIF
+    employees = Employee.objects.filter(tgl_out__isnull=True).select_related('department', 'position')
     
     if search_query:
         employees = employees.filter(
@@ -202,6 +202,7 @@ def employee_search_api(request):
             'department': emp.department.name if emp.department else '-',
             'position': emp.position.title if emp.position else '-',
             'employment_status': emp.employment_status,
+            'status_karyawan': emp.status_karyawan,
             'avatar_color': emp.department.name if emp.department else '',
             'initials': get_initials(emp.nama),
         })
@@ -238,8 +239,9 @@ def export_employees(request):
         selected_columns = ['employee_id', 'nama', 'department', 'position', 
                            'employment_status', 'no_hp', 'email']
     
-    # Filter data
-    employees = Employee.objects.all().select_related('department', 'position')
+    # BASE QUERYSET - HANYA KARYAWAN AKTIF
+    employees = Employee.objects.filter(tgl_out__isnull=True).select_related('department', 'position')
+    
     if status_filter:
         employees = employees.filter(employment_status=status_filter)
     if department_filter:
@@ -267,6 +269,7 @@ def export_employees(request):
         'department': 'Department',
         'position': 'Posisi',
         'employment_status': 'Status',
+        'status_karyawan': 'Status Karyawan',
         'tgl_rekrut': 'Tanggal Rekrut',
         'tgl_out': 'Tanggal Keluar',
         'no_rek_bank': 'No Rekening',
@@ -300,6 +303,8 @@ def export_employees(request):
                     value = emp.position.title
                 elif field == 'employment_status':
                     value = dict(Employee.EMPLOYMENT_STATUS).get(emp.employment_status, '')
+                elif field == 'status_karyawan':
+                    value = dict(Employee.STATUS_KARYAWAN).get(emp.status_karyawan, '')
                 ws.cell(row=row, column=col, value=value)
         
         wb.save(response)
@@ -324,6 +329,8 @@ def export_employees(request):
                     value = emp.position.title
                 elif field == 'employment_status':
                     value = dict(Employee.EMPLOYMENT_STATUS).get(emp.employment_status, '')
+                elif field == 'status_karyawan':
+                    value = dict(Employee.STATUS_KARYAWAN).get(emp.status_karyawan, '')
                 row.append(value)
             writer.writerow(row)
         

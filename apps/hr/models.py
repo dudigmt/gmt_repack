@@ -76,6 +76,7 @@ class Employee(models.Model):
     STATUS_KARYAWAN = (
         ('tetap', 'Tetap'),
         ('kontrak', 'Kontrak'),
+        ('os', 'OS'),
         ('probation', 'Probation'),
         ('harian', 'Harian'),
     )
