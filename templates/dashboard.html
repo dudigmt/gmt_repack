@@ -1,27 +1,202 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load hr_extras %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard HR - GMT Repack{% endblock %}
 
 {% block content %}
-<div class="bg-white rounded-lg shadow p-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Welcome to GMT Repack</h2>
-    <p class="text-gray-600">This is a dashboard page styled with TailwindCSS.</p>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div class="bg-blue-100 p-4 rounded-lg">
-            <h3 class="font-semibold text-blue-800">HR Module</h3>
-            <p class="text-sm text-blue-600">Manage employees, departments, positions</p>
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="page-header">
+        <h1 class="page-title">Dashboard HR</h1>
+        <p class="page-description">Ringkasan data karyawan aktif</p>
+    </div>
+
+    <!-- Stat Cards - Sama persis dengan di employee_list -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Total -->
+        <div class="stat-card">
+            <div class="flex items-center">
+                <div class="stat-icon stat-icon-blue">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="stat-label" title="Total karyawan aktif">Total</p>
+                    <p class="stat-value">{{ stats.total }}</p>
+                </div>
+            </div>
         </div>
-        <div class="bg-green-100 p-4 rounded-lg">
-            <h3 class="font-semibold text-green-800">Production Module</h3>
-            <p class="text-sm text-green-600">Track work orders and production lines</p>
+        
+        <!-- Tetap -->
+        <div class="stat-card">
+            <div class="flex items-center">
+                <div class="stat-icon stat-icon-green">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="stat-label" title="Karyawan tetap">Tetap</p>
+                    <p class="stat-value">{{ stats.tetap }}</p>
+                </div>
+            </div>
         </div>
-        <div class="bg-purple-100 p-4 rounded-lg">
-            <h3 class="font-semibold text-purple-800">Warehouse Module</h3>
-            <p class="text-sm text-purple-600">Manage inventory and stock movements</p>
+        
+        <!-- Kontrak -->
+        <div class="stat-card">
+            <div class="flex items-center">
+                <div class="stat-icon stat-icon-yellow">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="stat-label" title="Karyawan kontrak">Kontrak</p>
+                    <p class="stat-value">{{ stats.kontrak }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- OS (Outsourcing) -->
+        <div class="stat-card">
+            <div class="flex items-center">
+                <div class="stat-icon stat-icon-purple">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p class="stat-label" title="Karyawan outsourcing">OS</p>
+                    <p class="stat-value">{{ stats.os }}</p>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="mt-4 p-3 bg-yellow-50 border-l-4 border-yellow-400">
-        <p class="text-yellow-700">TailwindCSS is successfully integrated!</p>
+
+    <!-- 2 Kolom: Chart dan Info -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Diagram Lingkaran (kiri) -->
+        <div class="card-glass p-6 lg:col-span-1">
+            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Komposisi Karyawan</h3>
+            <div class="space-y-4">
+                {% for item in employees_by_status %}
+                <div>
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="text-gray-700 dark:text-gray-300">
+                            {% if item.status_karyawan == 'tetap' %}Tetap
+                            {% elif item.status_karyawan == 'kontrak' %}Kontrak
+                            {% elif item.status_karyawan == 'os' %}OS
+                            {% else %}{{ item.status_karyawan|title }}
+                            {% endif %}
+                        </span>
+                        <span class="font-medium text-gray-900 dark:text-white">{{ item.count }}</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="h-2 rounded-full 
+                            {% if item.status_karyawan == 'tetap' %}bg-green-500
+                            {% elif item.status_karyawan == 'kontrak' %}bg-yellow-500
+                            {% elif item.status_karyawan == 'os' %}bg-purple-500
+                            {% else %}bg-blue-500{% endif %}"
+                            style="width: {% widthratio item.count stats.total 100 %}%">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Ringkasan tambahan -->
+            <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-600 dark:text-gray-400">Total Department</span>
+                    <span class="font-medium text-gray-900 dark:text-white">{{ total_departments }}</span>
+                </div>
+                <div class="flex justify-between text-sm mt-2">
+                    <span class="text-gray-600 dark:text-gray-400">Total Posisi</span>
+                    <span class="font-medium text-gray-900 dark:text-white">{{ total_positions }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 3 Karyawan Baru Bulan Ini (kanan) -->
+        <div class="card-glass p-6 lg:col-span-2">
+            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                Karyawan Baru Bulan Ini
+                <span class="text-sm font-normal text-gray-500 dark:text-gray-400 ml-2">
+                    ({{ new_employees|length }} orang)
+                </span>
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead>
+                        <tr class="text-left text-xs text-gray-500 dark:text-gray-400 uppercase">
+                            <th class="pb-2">NIK</th>
+                            <th class="pb-2">Nama</th>
+                            <th class="pb-2">Department</th>
+                            <th class="pb-2">Status</th>
+                            <th class="pb-2">Tgl Rekrut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emp in new_employees %}
+                        <tr class="border-t border-gray-200 dark:border-gray-700">
+                            <td class="py-3 text-sm text-gray-800 dark:text-gray-200">{{ emp.employee_id }}</td>
+                            <td class="py-3 text-sm">
+                                <div class="flex items-center">
+                                    <div class="avatar avatar-xs {{ emp.department|avatar_color }} mr-2">
+                                        {{ emp|initials }}
+                                    </div>
+                                    <span class="text-gray-900 dark:text-white">{{ emp.nama }}</span>
+                                </div>
+                            </td>
+                            <td class="py-3 text-sm text-gray-800 dark:text-gray-200">{{ emp.department.name|default:'-' }}</td>
+                            <td class="py-3 text-sm">
+                                <span class="badge-sm 
+                                    {% if emp.status_karyawan == 'tetap' %}badge-light-success
+                                    {% elif emp.status_karyawan == 'kontrak' %}badge-light-warning
+                                    {% elif emp.status_karyawan == 'os' %}badge-light-info
+                                    {% else %}badge-light{% endif %}">
+                                    {{ emp.get_status_karyawan_display }}
+                                </span>
+                            </td>
+                            <td class="py-3 text-sm text-gray-800 dark:text-gray-200">{{ emp.tgl_rekrut|date:"d M Y"|default:'-' }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="py-8 text-center text-gray-500 dark:text-gray-400">
+                                Belum ada karyawan baru bulan ini
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 text-right">
+                <a href="{% url 'hr:employee_list' %}" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
+                    Lihat semua karyawan →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grafik Department - HANYA YANG > 0 -->
+    <div class="card-glass p-6">
+        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Sebaran Karyawan per Department</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for dept in employees_by_dept %}
+            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-200 dark:!text-gray-200">
+                <span class="text-sm px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
+                    {{ dept.emp_count }}
+                </span>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center text-gray-500 dark:text-gray-400 py-4">
+                Belum ada data department dengan karyawan
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

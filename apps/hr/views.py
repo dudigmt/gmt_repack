@@ -18,19 +18,43 @@ import openpyxl
 from datetime import datetime
 
 def dashboard(request):
-    total_employees = Employee.objects.count()
-    total_departments = Department.objects.count()
-    total_positions = Position.objects.count()
+    from django.utils import timezone
+    from datetime import timedelta
     
-    employees_by_dept = Department.objects.annotate(emp_count=Count('employees')).values('name', 'emp_count')
-    employees_by_status = Employee.objects.values('employment_status').annotate(count=Count('id'))
+    # Base queryset - hanya karyawan aktif (tgl_out kosong)
+    active_employees = Employee.objects.filter(tgl_out__isnull=True)
+    
+    # Statistik - sama persis dengan di employee_list
+    stats = {
+        'total': active_employees.count(),
+        'tetap': active_employees.filter(status_karyawan='tetap').count(),
+        'kontrak': active_employees.filter(status_karyawan='kontrak').count(),
+        'os': active_employees.filter(status_karyawan='os').count(),
+    }
+    
+    # Karyawan baru bulan ini (hanya 3)
+    first_day_of_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    new_employees_this_month = active_employees.filter(
+        tgl_rekrut__gte=first_day_of_month
+    ).order_by('-tgl_rekrut')[:3]
+    
+    # Data untuk chart - HANYA YANG > 0
+    employees_by_dept = []
+    for dept in Department.objects.annotate(
+        emp_count=Count('employees', filter=Q(employees__tgl_out__isnull=True))
+    ).values('name', 'emp_count'):
+        if dept['emp_count'] > 0:  # <-- FILTER YANG > 0
+            employees_by_dept.append(dept)
+    
+    employees_by_status = active_employees.values('status_karyawan').annotate(count=Count('id'))
     
     context = {
-        'total_employees': total_employees,
-        'total_departments': total_departments,
-        'total_positions': total_positions,
+        'stats': stats,
         'employees_by_dept': employees_by_dept,
         'employees_by_status': employees_by_status,
+        'new_employees': new_employees_this_month,  # <-- GANTI recent_employees jadi new_employees
+        'total_departments': Department.objects.count(),
+        'total_positions': Position.objects.count(),
     }
     return render(request, 'hr/dashboard.html', context)
 
@@ -76,7 +100,7 @@ def employee_list(request):
     """
     # Ambil parameter dari request
     search_query = request.GET.get('search', '').strip()
-    status_filter = request.GET.get('status', '')
+    status_filter = request.GET.get('status_karyawan', '')
     department_filter = request.GET.get('department', '')
     position_filter = request.GET.get('position', '')
     sort_by = request.GET.get('sort', 'employee_id')
@@ -97,7 +121,8 @@ def employee_list(request):
     
     # Filter berdasarkan status
     if status_filter:
-        employees = employees.filter(employment_status=status_filter)
+        # Filter berdasarkan status_karyawan (Tetap/Kontrak/OS)
+        employees = employees.filter(status_karyawan=status_filter)
     
     # Filter berdasarkan department
     if department_filter:

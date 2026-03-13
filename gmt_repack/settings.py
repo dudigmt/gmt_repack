@@ -154,6 +154,9 @@ UNFOLD = {
     "LOGIN": {
         "image": None,  # gambar login
     },
+    "ACTIONS": {
+        "GO_BUTTON":True,
+    },
     "STYLES": [
         # tambahkan custom CSS jika perlu
     ],

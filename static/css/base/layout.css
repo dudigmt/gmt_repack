@@ -547,3 +547,87 @@
         display: none !important;
     }
 }
+
+/* Sidebar Submenu */
+.sidebar-submenu {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-left: calc(var(--spacing-4) + 20px);
+}
+
+.sidebar-submenu.open {
+    max-height: 200px;
+    opacity: 1;
+    margin-bottom: var(--spacing-2);
+}
+
+.sidebar-submenu-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast) var(--transition-timing);
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-submenu-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-secondary-600));
+    transform: scaleY(0);
+    transition: transform var(--transition-fast) var(--transition-timing);
+}
+
+.sidebar-submenu-item:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    padding-left: calc(var(--spacing-4) + 4px);
+}
+
+.sidebar-submenu-item:hover::before {
+    transform: scaleY(1);
+}
+
+.sidebar-submenu-item.active {
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-medium);
+    background: var(--color-primary-50);
+}
+
+.dark .sidebar-submenu-item.active {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--color-primary-400);
+}
+
+.sidebar-submenu-item.active::before {
+    transform: scaleY(1);
+}
+
+.module-arrow {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.module-arrow.rotated {
+    transform: rotate(180deg);
+}
+
+/* Active module highlight */
+.sidebar-menu-item.active {
+    background: linear-gradient(135deg, var(--color-primary-50), var(--color-secondary-50));
+    color: var(--color-primary-700);
+    font-weight: var(--font-weight-medium);
+}
+
+.dark .sidebar-menu-item.active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+    color: var(--color-primary-400);
+}
