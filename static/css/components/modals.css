@@ -139,19 +139,19 @@
 /* --------------------------------------------------------------------------
    Advanced Filter Modal Specific
    -------------------------------------------------------------------------- */
-.filter-modal .modal-body {
+.filter-modal-custom .modal-body {  /* GANTI .filter-modal jadi .filter-modal-custom */
     padding: var(--spacing-8);
 }
 
-.filter-group {
+.filter-modal-custom .filter-group {
     margin-bottom: var(--spacing-6);
 }
 
-.filter-group:last-child {
+.filter-modal-custom .filter-group:last-child {
     margin-bottom: 0;
 }
 
-.filter-label {
+.filter-modal-custom .filter-label {
     display: block;
     margin-bottom: var(--spacing-3);
     font-size: var(--font-size-sm);
@@ -161,8 +161,30 @@
     letter-spacing: 0.05em;
 }
 
-.dark .filter-label {
+.dark .filter-modal-custom .filter-label {
     color: var(--dark-text-secondary);
+}
+
+.filter-modal-custom select {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.dark .filter-modal-custom select {
+    background-color: var(--dark-bg-tertiary);
+    color: var(--dark-text-primary);
+    border-color: var(--dark-border);
+}
+
+.filter-modal-custom select option {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.dark .filter-modal-custom select option {
+    background-color: var(--dark-bg-tertiary);
+    color: var(--dark-text-primary);
 }
 
 /* --------------------------------------------------------------------------
@@ -210,9 +232,17 @@
     margin-bottom: var(--spacing-2);
 }
 
+.dark .modal-confirm-title {
+    color: var(--dark-text-primary);
+}
+
 .modal-confirm-message {
     color: var(--text-tertiary);
     margin-bottom: var(--spacing-6);
+}
+
+.dark .modal-confirm-message {
+    color: var(--dark-text-tertiary);
 }
 
 /* --------------------------------------------------------------------------
@@ -258,6 +288,53 @@
 }
 
 /* --------------------------------------------------------------------------
+   Modal Karyawan
+   -------------------------------------------------------------------------- */
+#employeeModal {
+    z-index: 99999 !important;
+}
+
+#employeeModal .bg-white {
+    background-color: white;
+}
+
+.dark #employeeModal .bg-white {
+    background-color: #1f2937;  /* gray-800 */
+}
+
+#employeeModal .text-gray-900 {
+    color: #111827;
+}
+
+.dark #employeeModal .text-gray-900 {
+    color: #f9fafb;  /* gray-50 */
+}
+
+#employeeModal .text-gray-500 {
+    color: #6b7280;
+}
+
+.dark #employeeModal .text-gray-500 {
+    color: #9ca3af;  /* gray-400 */
+}
+
+#employeeModal .bg-gray-50 {
+    background-color: #f9fafb;
+}
+
+.dark #employeeModal .bg-gray-50 {
+    background-color: #374151;  /* gray-700 */
+}
+
+#employeeModal .border-gray-200 {
+    border-color: #e5e7eb;
+}
+
+.dark #employeeModal .border-gray-200 {
+    border-color: #4b5563;  /* gray-600 */
+}
+
+/* --------------------------------------------------------------------------
    Mobile Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 640px) {
@@ -287,13 +364,88 @@
     }
 }
 
-/* Modal Karyawan */
-#employeeModal {
-    z-index: 99999 !important;
+/* --------------------------------------------------------------------------
+   Modal Karyawan Custom
+   -------------------------------------------------------------------------- */
+.modal-backdrop-custom {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-#employeeModal[style*="display: block"] {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+.modal-content-custom {
+    background-color: white;
+}
+
+.dark .modal-content-custom {
+    background-color: #1f2937;
+}
+
+.modal-header-custom {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .modal-header-custom {
+    border-bottom-color: #374151;
+}
+
+.modal-title-custom {
+    color: white;
+}
+
+.modal-close-custom {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal-close-custom:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body-custom {
+    color: #111827;
+}
+
+.dark .modal-body-custom {
+    color: #f9fafb;
+    background-color: #1f2937;
+}
+
+.modal-loading-custom p {
+    color: #6b7280;
+}
+
+.dark .modal-loading-custom p {
+    color: #9ca3af;
+}
+
+.modal-content-inner {
+    color: #111827;
+}
+
+.dark .modal-content-inner {
+    color: #f9fafb;
+}
+
+/* Grid items di dalam modal */
+.modal-content-inner .bg-gray-50 {
+    background-color: #f9fafb;
+}
+
+.dark .modal-content-inner .bg-gray-50 {
+    background-color: #374151;
+}
+
+.modal-content-inner .text-gray-900 {
+    color: #111827;
+}
+
+.dark .modal-content-inner .text-gray-900 {
+    color: #f9fafb;
+}
+
+.modal-content-inner .text-gray-500 {
+    color: #6b7280;
+}
+
+.dark .modal-content-inner .text-gray-500 {
+    color: #9ca3af;
 }

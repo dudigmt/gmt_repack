@@ -30,4 +30,4 @@
    -------------------------------------------------------------------------- */
 
 /* PAGE SPECIFIC - PALING AKHIR */
-@import './pages/hr/employee-list.css';  /* TERAKHIR, override yang lain */
+@import './hr/employee-list.css';  /* TERAKHIR, override yang lain */
