@@ -352,7 +352,7 @@
 /* --------------------------------------------------------------------------
    Advanced Filter Modal
    -------------------------------------------------------------------------- */
-.filter-modal {
+.filter-modal-custom {
     @apply fixed inset-0 z-50 flex items-center justify-center p-4;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);

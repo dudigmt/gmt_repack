@@ -30,9 +30,9 @@
             </thead>
             <tbody>
                 {% for employee in page_obj %}
-                <tr class="hover-card" 
-                    data-nama="{{ employee.nama }}"
+                <tr class="hover-card cursor-pointer" 
                     data-nik="{{ employee.employee_id }}"
+                    data-nama="{{ employee.nama }}"
                     data-dept="{{ employee.department.name|default:'-' }}"
                     data-posisi="{{ employee.position.title|default:'-' }}"
                     data-status="{{ employee.employment_status }}">

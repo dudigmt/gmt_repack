@@ -123,13 +123,31 @@
    Employee Cards (Grid View)
    -------------------------------------------------------------------------- */
 .employee-card {
-    composes: card-glass;
     position: relative;
     cursor: pointer;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-glass);
+    transition: all var(--transition-base) var(--transition-timing);
+    overflow: hidden;
+}
+
+.dark .employee-card {
+    background: rgba(17, 24, 39, 0.7);
+    border-color: rgba(255, 255, 255, 0.05);
 }
 
 .employee-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glass-hover);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.dark .employee-card:hover {
+    background: rgba(31, 41, 55, 0.8);
 }
 
 .employee-card .card-header {
@@ -198,6 +216,30 @@
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-medium);
     color: var(--color-primary-600);
+}
+/* card grid */
+.employee-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--spacing-4);
+}
+
+@media (min-width: 640px) {
+    .employee-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .employee-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .employee-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 /* --------------------------------------------------------------------------

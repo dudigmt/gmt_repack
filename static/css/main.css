@@ -28,3 +28,6 @@
    Pages - akan diimport sesuai halaman
    @import './pages/hr/employee-list.css';
    -------------------------------------------------------------------------- */
+
+/* PAGE SPECIFIC - PALING AKHIR */
+@import './hr/employee-list.css';  /* TERAKHIR, override yang lain */

@@ -36,3 +36,6 @@ gmt_repack/
 ├── tailwind.config.js              # MODIF - update content paths
 └── gmt_repack/
     └── settings.py                  # CEK - static files config
+
+
+    

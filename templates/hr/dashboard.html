@@ -160,7 +160,7 @@
                         {% empty %}
                         <tr>
                             <td colspan="5" class="py-8 text-center text-gray-500">
-                                Belum ada data karyawan
+                                Belum ada data karyawan baru
                             </td>
                         </tr>
                         {% endfor %}
@@ -175,19 +175,45 @@
         </div>
     </div>
 
-    <!-- Grafik Department (bisa ditambah nanti) -->
+    <!-- Sebaran Karyawan per Department - Grid Version dengan Status -->
     <div class="card-glass p-6">
-        <h3 class="text-lg font-semibold mb-4">Sebaran Karyawan per Department</h3>
+        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Sebaran Karyawan per Department</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for dept in employees_by_dept %}
-            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <span class="text-sm font-medium">{{ dept.name }}</span>
-                <span class="text-sm px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
-                    {{ dept.emp_count }}
-                </span>
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <!-- Nama Department -->
+                <div class="font-medium text-gray-900 dark:text-black mb-2">
+                    {{ dept.name }}
+                </div>
+                
+                <!-- Total -->
+                <div class="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                    Total: <span class="font-semibold text-gray-900 dark:text-black">{{ dept.total }}</span>
+                </div>
+                
+                <!-- Badge Status -->
+                <div class="flex flex-wrap gap-2">
+                    {% if dept.tetap > 0 %}
+                    <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs flex items-center">
+                        <span class="font-medium mr-1">{{ dept.tetap }}</span> Tetap
+                    </span>
+                    {% endif %}
+                    
+                    {% if dept.kontrak > 0 %}
+                    <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-xs flex items-center">
+                        <span class="font-medium mr-1">{{ dept.kontrak }}</span> Kontrak
+                    </span>
+                    {% endif %}
+                    
+                    {% if dept.os > 0 %}
+                    <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-xs flex items-center">
+                        <span class="font-medium mr-1">{{ dept.os }}</span> OS
+                    </span>
+                    {% endif %}
+                </div>
             </div>
             {% empty %}
-            <div class="col-span-full text-center text-gray-500 py-4">
+            <div class="col-span-full text-center text-gray-500 dark:text-gray-400 py-4">
                 Belum ada data department
             </div>
             {% endfor %}
