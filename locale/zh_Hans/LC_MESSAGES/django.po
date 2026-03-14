@@ -1,0 +1,138 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-15 00:28+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: gmt_repack/settings.py:135
+msgid "Indonesia"
+msgstr "印尼语"
+
+#: gmt_repack/settings.py:136
+msgid "English"
+msgstr "英语"
+
+#: gmt_repack/settings.py:137
+msgid "Korean"
+msgstr "韩语"
+
+#: gmt_repack/settings.py:138
+msgid "Chinese"
+msgstr "中文"
+
+#: templates/base.html:131
+msgid "Language"
+msgstr "语言"
+
+#: templates/hr/dashboard.html:6 templates/hr/dashboard.html:12
+msgid "Dashboard HR"
+msgstr "人力资源仪表板"
+
+#: templates/hr/dashboard.html:13
+msgid "Ringkasan data karyawan aktif"
+msgstr "在职员工摘要"
+
+#: templates/hr/dashboard.html:27
+msgid "Total karyawan aktif"
+msgstr "在职员工总数"
+
+#: templates/hr/dashboard.html:27 templates/hr/dashboard.html:204
+msgid "Total"
+msgstr "总计"
+
+#: templates/hr/dashboard.html:42
+msgid "Karyawan tetap"
+msgstr "正式员工"
+
+#: templates/hr/dashboard.html:42 templates/hr/dashboard.html:89
+#: templates/hr/dashboard.html:163 templates/hr/dashboard.html:211
+msgid "Tetap"
+msgstr "正式员工"
+
+#: templates/hr/dashboard.html:57
+msgid "Karyawan kontrak"
+msgstr "合同员工"
+
+#: templates/hr/dashboard.html:57 templates/hr/dashboard.html:90
+#: templates/hr/dashboard.html:164 templates/hr/dashboard.html:217
+msgid "Kontrak"
+msgstr "合同员工"
+
+#: templates/hr/dashboard.html:72
+msgid "Karyawan outsourcing"
+msgstr "外包员工"
+
+#: templates/hr/dashboard.html:72 templates/hr/dashboard.html:91
+#: templates/hr/dashboard.html:165 templates/hr/dashboard.html:223
+msgid "OS"
+msgstr "外包"
+
+#: templates/hr/dashboard.html:83
+msgid "Komposisi Karyawan"
+msgstr "员工构成"
+
+#: templates/hr/dashboard.html:113
+msgid "Total Department"
+msgstr "部门总数"
+
+#: templates/hr/dashboard.html:117
+msgid "Total Posisi"
+msgstr "职位总数"
+
+#: templates/hr/dashboard.html:126
+msgid "Karyawan Baru Bulan Ini"
+msgstr "本月新员工"
+
+#: templates/hr/dashboard.html:128
+msgid "orang"
+msgstr "人"
+
+#: templates/hr/dashboard.html:136
+msgid "Nama"
+msgstr "姓名"
+
+#: templates/hr/dashboard.html:137
+msgid "Department"
+msgstr "部门"
+
+#: templates/hr/dashboard.html:138
+msgid "Posisi"
+msgstr "职位"
+
+#: templates/hr/dashboard.html:139
+msgid "Status"
+msgstr "状态"
+
+#: templates/hr/dashboard.html:140
+msgid "Tgl Rekrut"
+msgstr "入职日期"
+
+#: templates/hr/dashboard.html:175
+msgid "Belum ada karyawan baru bulan ini"
+msgstr "本月没有新员工"
+
+#: templates/hr/dashboard.html:185
+msgid "Lihat semua karyawan baru"
+msgstr "查看所有新员工"
+
+#: templates/hr/dashboard.html:193
+msgid "Sebaran Karyawan per Department"
+msgstr "各部门员工分布"
+
+#: templates/hr/dashboard.html:230
+msgid "Belum ada data department"
+msgstr "暂无部门数据"

@@ -1,3 +1,5 @@
+{% load i18n %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -122,8 +124,25 @@
         </nav>
 
         <!-- User Profile - Glassmorphism Style -->
-                <!-- User Profile - Unfold Style (Doyan Version) -->
+        <!-- User Profile - Unfold Style (Doyan Version) -->
         <div class="border-t border-gray-200 dark:border-gray-700">
+            <!-- Language Selector -->
+            <div class="flex items-center justify-between px-4 py-2">
+                <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">{% trans "Language" %}</span>
+                <form action="{% url 'set_language' %}" method="post" class="flex">
+                    {% csrf_token %}
+                    <select name="language" onchange="this.form.submit()" class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs rounded-lg px-2 py-1 border border-gray-300 dark:border-gray-600">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ language.name_local }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
             <!-- Theme Toggle - Unfold style switch with slider -->
             <div class="flex items-center justify-between px-4 py-3">
                 <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Theme</span>

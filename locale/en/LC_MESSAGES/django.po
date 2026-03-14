@@ -1,0 +1,138 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-15 00:28+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: gmt_repack/settings.py:135
+msgid "Indonesia"
+msgstr "Indonesian"
+
+#: gmt_repack/settings.py:136
+msgid "English"
+msgstr "English"
+
+#: gmt_repack/settings.py:137
+msgid "Korean"
+msgstr "Korean"
+
+#: gmt_repack/settings.py:138
+msgid "Chinese"
+msgstr "Chinese"
+
+#: templates/base.html:131
+msgid "Language"
+msgstr ""
+
+#: templates/hr/dashboard.html:6 templates/hr/dashboard.html:12
+msgid "Dashboard HR"
+msgstr "HR Dashboard"
+
+#: templates/hr/dashboard.html:13
+msgid "Ringkasan data karyawan aktif"
+msgstr "Active Employees Summary"
+
+#: templates/hr/dashboard.html:27
+msgid "Total karyawan aktif"
+msgstr "Total Active Employees"
+
+#: templates/hr/dashboard.html:27 templates/hr/dashboard.html:204
+msgid "Total"
+msgstr "Total"
+
+#: templates/hr/dashboard.html:42
+msgid "Karyawan tetap"
+msgstr "Permanent Employees"
+
+#: templates/hr/dashboard.html:42 templates/hr/dashboard.html:89
+#: templates/hr/dashboard.html:163 templates/hr/dashboard.html:211
+msgid "Tetap"
+msgstr "Permanent"
+
+#: templates/hr/dashboard.html:57
+msgid "Karyawan kontrak"
+msgstr "Contract Employees"
+
+#: templates/hr/dashboard.html:57 templates/hr/dashboard.html:90
+#: templates/hr/dashboard.html:164 templates/hr/dashboard.html:217
+msgid "Kontrak"
+msgstr "Contract"
+
+#: templates/hr/dashboard.html:72
+msgid "Karyawan outsourcing"
+msgstr "OS Employees"
+
+#: templates/hr/dashboard.html:72 templates/hr/dashboard.html:91
+#: templates/hr/dashboard.html:165 templates/hr/dashboard.html:223
+msgid "OS"
+msgstr "OS"
+
+#: templates/hr/dashboard.html:83
+msgid "Komposisi Karyawan"
+msgstr "Employee Composition"
+
+#: templates/hr/dashboard.html:113
+msgid "Total Department"
+msgstr "Total Departments"
+
+#: templates/hr/dashboard.html:117
+msgid "Total Posisi"
+msgstr "Total Positions"
+
+#: templates/hr/dashboard.html:126
+msgid "Karyawan Baru Bulan Ini"
+msgstr "New Employees This Month"
+
+#: templates/hr/dashboard.html:128
+msgid "orang"
+msgstr "people"
+
+#: templates/hr/dashboard.html:136
+msgid "Nama"
+msgstr "Name"
+
+#: templates/hr/dashboard.html:137
+msgid "Department"
+msgstr "Departement"
+
+#: templates/hr/dashboard.html:138
+msgid "Posisi"
+msgstr "Position"
+
+#: templates/hr/dashboard.html:139
+msgid "Status"
+msgstr "Status"
+
+#: templates/hr/dashboard.html:140
+msgid "Tgl Rekrut"
+msgstr "Hire Date"
+
+#: templates/hr/dashboard.html:175
+msgid "Belum ada karyawan baru bulan ini"
+msgstr "No new employees this month"
+
+#: templates/hr/dashboard.html:185
+msgid "Lihat semua karyawan baru"
+msgstr "View all new employees"
+
+#: templates/hr/dashboard.html:193
+msgid "Sebaran Karyawan per Department"
+msgstr "mployees by Department"
+
+#: templates/hr/dashboard.html:230
+msgid "Belum ada data department"
+msgstr "No department dat"

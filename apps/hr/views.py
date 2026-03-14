@@ -34,11 +34,14 @@ def dashboard(request):
         'os': active_employees.filter(status_karyawan='os').count(),
     }
     
-    # Karyawan baru bulan ini (hanya 3)
+    # Karyawan baru bulan ini
     first_day_of_month = timezone.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    new_employees_this_month = active_employees.filter(
+    new_employees_all = active_employees.filter(
         tgl_rekrut__gte=first_day_of_month
-    ).order_by('-tgl_rekrut')[:3]
+    ).order_by('-tgl_rekrut')
+
+    # Ambil 5 untuk ditampilkan
+    new_employees_display = new_employees_all[:5]
     
     # SEBARAN KARYAWAN PER DEPARTMENT + STATUS
     employees_by_dept = []
@@ -72,8 +75,8 @@ def dashboard(request):
         'stats': stats,
         'employees_by_dept': employees_by_dept,
         'employees_by_status': employees_by_status,
-        'new_employees': new_employees_this_month[:10],
-        'new_employees_count': new_employees_this_month.count(),
+        'new_employees': new_employees_display,        # 5 data untuk ditampilkan
+        'new_employees_count': new_employees_all.count(),  # Total semua
         'total_departments': Department.objects.count(),
         'total_positions': Position.objects.count(),
     }
@@ -127,6 +130,8 @@ def employee_list(request):
     sort_by = request.GET.get('sort', 'employee_id')
     order = request.GET.get('order', 'asc')
     view_mode = request.GET.get('view', 'table')  # 'table' atau 'card'
+    tgl_rekrut_bulan_ini = request.GET.get('tgl_rekrut_bulan_ini')
+    karyawan_keluar_bulan_ini = request.GET.get('karyawan_keluar_bulan_ini')  # Karyawan keluar
     
     # BASE QUERYSET - HANYA KARYAWAN AKTIF (tgl_out kosong)
     employees = Employee.objects.filter(tgl_out__isnull=True).select_related('department', 'position')
@@ -152,6 +157,12 @@ def employee_list(request):
     # Filter berdasarkan position
     if position_filter:
         employees = employees.filter(position_id=position_filter)
+
+    # FILTER KARYAWAN BARU BULAN INI
+    if tgl_rekrut_bulan_ini:
+        from django.utils import timezone
+        first_day = timezone.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        employees = employees.filter(tgl_rekrut__gte=first_day)
     
     # Sorting
     if order == 'desc':
@@ -184,6 +195,8 @@ def employee_list(request):
         'sort': sort_by.lstrip('-'),
         'order': order,
         'view': view_mode,
+        'tgl_rekrut_bulan_ini': tgl_rekrut_bulan_ini,
+        'karyawan_keluar_bulan_ini' : karyawan_keluar_bulan_ini,
     }
     
     context = {

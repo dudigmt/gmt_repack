@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% load hr_extras %}
 
-{% block title %}Dashboard HR - GMT Repack{% endblock %}
+{% block title %}{% trans "Dashboard HR" %} - GMT Repack{% endblock %}
 
 {% block content %}
 <div class="space-y-6">
     <!-- Header -->
     <div class="page-header">
-        <h1 class="page-title">Dashboard HR</h1>
-        <p class="page-description">Ringkasan data karyawan aktif</p>
+        <h1 class="page-title">{% trans "Dashboard HR" %}</h1>
+        <p class="page-description">{% trans "Ringkasan data karyawan aktif" %}</p>
     </div>
 
-    <!-- Stat Cards - Beri margin bottom biar ga nempel -->
+    <!-- Stat Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- Total -->
         <div class="stat-card">
@@ -23,7 +24,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="stat-label" title="Total karyawan aktif">Total</p>
+                    <p class="stat-label" title="{% trans 'Total karyawan aktif' %}">{% trans "Total" %}</p>
                     <p class="stat-value">{{ stats.total }}</p>
                 </div>
             </div>
@@ -38,7 +39,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="stat-label" title="Karyawan tetap">Tetap</p>
+                    <p class="stat-label" title="{% trans 'Karyawan tetap' %}">{% trans "Tetap" %}</p>
                     <p class="stat-value">{{ stats.tetap }}</p>
                 </div>
             </div>
@@ -53,7 +54,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="stat-label" title="Karyawan kontrak">Kontrak</p>
+                    <p class="stat-label" title="{% trans 'Karyawan kontrak' %}">{% trans "Kontrak" %}</p>
                     <p class="stat-value">{{ stats.kontrak }}</p>
                 </div>
             </div>
@@ -68,7 +69,7 @@
                     </svg>
                 </div>
                 <div class="ml-4">
-                    <p class="stat-label" title="Karyawan outsourcing">OS</p>
+                    <p class="stat-label" title="{% trans 'Karyawan outsourcing' %}">{% trans "OS" %}</p>
                     <p class="stat-value">{{ stats.os }}</p>
                 </div>
             </div>
@@ -77,17 +78,17 @@
 
     <!-- 2 Kolom: Komposisi Karyawan & Karyawan Baru -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Komposisi Karyawan (lebar 4 kolom) -->
+        <!-- Komposisi Karyawan -->
         <div class="card-glass p-6 lg:col-span-4">
-            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Komposisi Karyawan</h3>
+            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">{% trans "Komposisi Karyawan" %}</h3>
             <div class="space-y-4">
                 {% for item in employees_by_status %}
                 <div>
                     <div class="flex justify-between text-sm mb-1">
                         <span class="text-gray-700 dark:text-gray-300">
-                            {% if item.status_karyawan == 'tetap' %}Tetap
-                            {% elif item.status_karyawan == 'kontrak' %}Kontrak
-                            {% elif item.status_karyawan == 'os' %}OS
+                            {% if item.status_karyawan == 'tetap' %}{% trans "Tetap" %}
+                            {% elif item.status_karyawan == 'kontrak' %}{% trans "Kontrak" %}
+                            {% elif item.status_karyawan == 'os' %}{% trans "OS" %}
                             {% else %}{{ item.status_karyawan|title }}
                             {% endif %}
                         </span>
@@ -109,22 +110,22 @@
             <!-- Ringkasan tambahan -->
             <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div class="flex justify-between text-sm">
-                    <span class="text-gray-600 dark:text-gray-400">Total Department</span>
+                    <span class="text-gray-600 dark:text-gray-400">{% trans "Total Department" %}</span>
                     <span class="font-medium text-gray-900 dark:text-white">{{ total_departments }}</span>
                 </div>
                 <div class="flex justify-between text-sm mt-2">
-                    <span class="text-gray-600 dark:text-gray-400">Total Posisi</span>
+                    <span class="text-gray-600 dark:text-gray-400">{% trans "Total Posisi" %}</span>
                     <span class="font-medium text-gray-900 dark:text-white">{{ total_positions }}</span>
                 </div>
             </div>
         </div>
         
-        <!-- Karyawan Baru Bulan Ini (lebar 8 kolom) -->
+        <!-- Karyawan Baru Bulan Ini -->
         <div class="card-glass p-6 lg:col-span-8">
             <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-                Karyawan Baru Bulan Ini
+                {% trans "Karyawan Baru Bulan Ini" %}
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400 ml-2">
-                    ({{ new_employees_count }} orang)  <!-- Total semua, bukan cuma yang tampil -->
+                    ({{ new_employees_count }} {% trans "orang" %})
                 </span>
             </h3>
             <div class="overflow-x-auto">
@@ -132,10 +133,11 @@
                     <thead>
                         <tr class="text-left text-xs text-gray-500 dark:text-gray-400 uppercase">
                             <th class="pb-2">NIK</th>
-                            <th class="pb-2">Nama</th>
-                            <th class="pb-2">Department</th>
-                            <th class="pb-2">Status</th>
-                            <th class="pb-2">Tgl Rekrut</th>
+                            <th class="pb-2">{% trans "Nama" %}</th>
+                            <th class="pb-2">{% trans "Department" %}</th>
+                            <th class="pb-2">{% trans "Posisi" %}</th>
+                            <th class="pb-2">{% trans "Status" %}</th>
+                            <th class="pb-2">{% trans "Tgl Rekrut" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,15 +153,16 @@
                                 </div>
                             </td>
                             <td class="py-3 text-sm text-gray-800 dark:text-gray-200">{{ emp.department.name|default:'-' }}</td>
+                            <td class="py-3 text-sm text-gray-800 dark:text-gray-200">{{ emp.position.title|default:'-' }}</td>
                             <td class="py-3 text-sm">
                                 <span class="px-2 py-1 rounded-full text-xs 
                                     {% if emp.status_karyawan == 'tetap' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
                                     {% elif emp.status_karyawan == 'kontrak' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
                                     {% elif emp.status_karyawan == 'os' %}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200
                                     {% else %}bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300{% endif %}">
-                                    {% if emp.status_karyawan == 'tetap' %}Tetap
-                                    {% elif emp.status_karyawan == 'kontrak' %}Kontrak
-                                    {% elif emp.status_karyawan == 'os' %}OS
+                                    {% if emp.status_karyawan == 'tetap' %}{% trans "Tetap" %}
+                                    {% elif emp.status_karyawan == 'kontrak' %}{% trans "Kontrak" %}
+                                    {% elif emp.status_karyawan == 'os' %}{% trans "OS" %}
                                     {% else %}{{ emp.status_karyawan|title }}
                                     {% endif %}
                                 </span>
@@ -168,8 +171,8 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5" class="py-8 text-center text-gray-500 dark:text-gray-400">
-                                Belum ada karyawan baru bulan ini
+                            <td colspan="6" class="py-8 text-center text-gray-500 dark:text-gray-400">
+                                {% trans "Belum ada karyawan baru bulan ini" %}                                
                             </td>
                         </tr>
                         {% endfor %}
@@ -177,8 +180,8 @@
                 </table>
             </div>
             <div class="mt-4 text-right">
-                <a href="{% url 'hr:employee_list' %}?sort=-tgl_rekrut" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
-                    Lihat semua karyawan →
+                <a href="{% url 'hr:employee_list' %}?tgl_rekrut_bulan_ini=1&sort=-tgl_rekrut" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
+                    {% trans "Lihat semua karyawan baru" %} →
                 </a>
             </div>
         </div>
@@ -186,39 +189,44 @@
 
     <!-- Sebaran Karyawan per Department -->
     <div class="card-glass p-6">
-        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Sebaran Karyawan per Department</h3>
+        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">{% trans "Sebaran Karyawan per Department" %}</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for dept in employees_by_dept %}
-            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 transition-all duration-200 hover:bg-blue-50 hover:shadow-lg dark:hover:bg-gray-700 dark:hover:shadow-xl hover:-translate-y-1">
+                <!-- Nama Department -->
                 <div class="font-medium text-gray-900 dark:text-white mb-2">
                     {{ dept.name }}
                 </div>
+                
+                <!-- Total -->
                 <div class="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                    Total: <span class="font-semibold text-gray-900 dark:text-white">{{ dept.total }}</span>
+                    {% trans "Total" %}: <span class="font-semibold text-gray-900 dark:text-white">{{ dept.total }}</span>
                 </div>
-                <div class="flex flex-wrap gap-2">
+                
+                <!-- Container Badge -->
+                <div class="flex flex-wrap gap-2 p-2 rounded-lg bg-gray-200/50 dark:bg-gray-900/50">
                     {% if dept.tetap > 0 %}
                     <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs flex items-center">
-                        <span class="font-medium mr-1">{{ dept.tetap }}</span> Tetap
+                        <span class="font-medium mr-1">{{ dept.tetap }}</span> {% trans "Tetap" %}
                     </span>
                     {% endif %}
                     
                     {% if dept.kontrak > 0 %}
                     <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full text-xs flex items-center">
-                        <span class="font-medium mr-1">{{ dept.kontrak }}</span> Kontrak
+                        <span class="font-medium mr-1">{{ dept.kontrak }}</span> {% trans "Kontrak" %}
                     </span>
                     {% endif %}
                     
                     {% if dept.os > 0 %}
                     <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-xs flex items-center">
-                        <span class="font-medium mr-1">{{ dept.os }}</span> OS
+                        <span class="font-medium mr-1">{{ dept.os }}</span> {% trans "OS" %}
                     </span>
                     {% endif %}
                 </div>
             </div>
             {% empty %}
             <div class="col-span-full text-center text-gray-500 dark:text-gray-400 py-4">
-                Belum ada data department
+                {% trans "Belum ada data department" %}
             </div>
             {% endfor %}
         </div>

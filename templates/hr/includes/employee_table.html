@@ -74,13 +74,15 @@
                     </td>
                     
                     <td data-column="status">
-                        <span class="badge {{ employee.employment_status|status_badge_class }}">
-                            {{ employee.employment_status|status_icon|safe }}
-                            {% if employee.employment_status == 'active' %}Aktif
-                            {% elif employee.employment_status == 'probation' %}Probation
-                            {% elif employee.employment_status == 'terminated' %}Terminated
-                            {% elif employee.employment_status == 'resigned' %}Resigned
-                            {% else %}{{ employee.employment_status|title }}
+                        <span class="px-2 py-1 rounded-full text-xs font-medium
+                            {% if employee.status_karyawan == 'tetap' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
+                            {% elif employee.status_karyawan == 'kontrak' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
+                            {% elif employee.status_karyawan == 'os' %}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200
+                            {% else %}bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300{% endif %}">
+                            {% if employee.status_karyawan == 'tetap' %}Tetap
+                            {% elif employee.status_karyawan == 'kontrak' %}Kontrak
+                            {% elif employee.status_karyawan == 'os' %}OS
+                            {% else %}{{ employee.status_karyawan|title }}
                             {% endif %}
                         </span>
                     </td>

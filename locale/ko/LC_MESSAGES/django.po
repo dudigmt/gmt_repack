@@ -1,0 +1,138 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-15 00:28+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: gmt_repack/settings.py:135
+msgid "Indonesia"
+msgstr "인도네시아어"
+
+#: gmt_repack/settings.py:136
+msgid "English"
+msgstr "영어"
+
+#: gmt_repack/settings.py:137
+msgid "Korean"
+msgstr "한국어"
+
+#: gmt_repack/settings.py:138
+msgid "Chinese"
+msgstr "중국어"
+
+#: templates/base.html:131
+msgid "Language"
+msgstr "언어"
+
+#: templates/hr/dashboard.html:6 templates/hr/dashboard.html:12
+msgid "Dashboard HR"
+msgstr "HR 대시보드"
+
+#: templates/hr/dashboard.html:13
+msgid "Ringkasan data karyawan aktif"
+msgstr "활성 직원 요약"
+
+#: templates/hr/dashboard.html:27
+msgid "Total karyawan aktif"
+msgstr "활성 직원 총계"
+
+#: templates/hr/dashboard.html:27 templates/hr/dashboard.html:204
+msgid "Total"
+msgstr "총계"
+
+#: templates/hr/dashboard.html:42
+msgid "Karyawan tetap"
+msgstr "정규직"
+
+#: templates/hr/dashboard.html:42 templates/hr/dashboard.html:89
+#: templates/hr/dashboard.html:163 templates/hr/dashboard.html:211
+msgid "Tetap"
+msgstr "정규직"
+
+#: templates/hr/dashboard.html:57
+msgid "Karyawan kontrak"
+msgstr "계약직"
+
+#: templates/hr/dashboard.html:57 templates/hr/dashboard.html:90
+#: templates/hr/dashboard.html:164 templates/hr/dashboard.html:217
+msgid "Kontrak"
+msgstr "계약직"
+
+#: templates/hr/dashboard.html:72
+msgid "Karyawan outsourcing"
+msgstr "아웃소싱 직원"
+
+#: templates/hr/dashboard.html:72 templates/hr/dashboard.html:91
+#: templates/hr/dashboard.html:165 templates/hr/dashboard.html:223
+msgid "OS"
+msgstr "아웃소싱"
+
+#: templates/hr/dashboard.html:83
+msgid "Komposisi Karyawan"
+msgstr "직원 구성"
+
+#: templates/hr/dashboard.html:113
+msgid "Total Department"
+msgstr "전체 부서"
+
+#: templates/hr/dashboard.html:117
+msgid "Total Posisi"
+msgstr "전체 직위"
+
+#: templates/hr/dashboard.html:126
+msgid "Karyawan Baru Bulan Ini"
+msgstr "이번 달 신입 직원"
+
+#: templates/hr/dashboard.html:128
+msgid "orang"
+msgstr "명"
+
+#: templates/hr/dashboard.html:136
+msgid "Nama"
+msgstr "이름"
+
+#: templates/hr/dashboard.html:137
+msgid "Department"
+msgstr "부서"
+
+#: templates/hr/dashboard.html:138
+msgid "Posisi"
+msgstr "직위"
+
+#: templates/hr/dashboard.html:139
+msgid "Status"
+msgstr "상태"
+
+#: templates/hr/dashboard.html:140
+msgid "Tgl Rekrut"
+msgstr "입사일"
+
+#: templates/hr/dashboard.html:175
+msgid "Belum ada karyawan baru bulan ini"
+msgstr "이번 달 신입 직원이 없습니다"
+
+#: templates/hr/dashboard.html:185
+msgid "Lihat semua karyawan baru"
+msgstr "모든 신입 직원 보기"
+
+#: templates/hr/dashboard.html:193
+msgid "Sebaran Karyawan per Department"
+msgstr "부서별 직원 현황"
+
+#: templates/hr/dashboard.html:230
+msgid "Belum ada data department"
+msgstr "부서 데이터가 없습니다"
