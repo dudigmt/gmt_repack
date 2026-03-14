@@ -5,7 +5,7 @@
 {% block title %}Daftar Karyawan - GMT Repack{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/hr/employee-list.css' %}">
+<link rel="stylesheet" href="{% static 'css/pages/hr/employee-list.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -280,24 +280,24 @@
     </div>
 
     <!-- Filter Modal -->
-    <div id="filterModal" class="filter-modal-custom" style="display: none;">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title">Advanced Filter</h3>
-                <button class="modal-close" id="closeFilterModal">
+    <div id="filterModal" class="fixed inset-0 z-[99999] hidden flex items-center justify-center p-4" style="background-color: rgba(0,0,0,0.5);">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
+            <div class="px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-white">Advanced Filter</h3>
+                <button class="text-white hover:text-gray-200" id="closeFilterModal">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
             
-            <div class="modal-body">
+            <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
                 <form method="get" id="filterForm">
                     <input type="hidden" name="view" value="{{ view_mode }}">
                     
-                    <div class="filter-group">
-                        <label class="filter-label">Department</label>
-                        <select name="department" class="form-select" id="filterDepartment">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Department</label>
+                        <select name="department" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white" id="filterDepartment">
                             <option value="">Semua Department</option>
                             {% for dept in departments %}
                             <option value="{{ dept.id }}" {% if department_filter == dept.id %}selected{% endif %}>
@@ -307,9 +307,9 @@
                         </select>
                     </div>
                     
-                    <div class="filter-group">
-                        <label class="filter-label">Posisi</label>
-                        <select name="position" class="form-select" id="filterPosition">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Posisi</label>
+                        <select name="position" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white" id="filterPosition">
                             <option value="">Semua Posisi</option>
                             {% for pos in positions %}
                             <option value="{{ pos.id }}" {% if position_filter == pos.id %}selected{% endif %}>
@@ -319,9 +319,9 @@
                         </select>
                     </div>
                     
-                    <div class="filter-group">
-                        <label class="filter-label">Status</label>
-                        <select name="status" class="form-select">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Status</label>
+                        <select name="status" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
                             <option value="">Semua Status</option>
                             <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Aktif</option>
                             <option value="probation" {% if status_filter == 'probation' %}selected{% endif %}>Probation</option>
@@ -330,14 +330,57 @@
                         </select>
                     </div>
                     
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-ghost" id="cancelFilter">Batal</button>
-                        <button type="submit" class="btn btn-primary">Terapkan Filter</button>
+                    <div class="flex justify-end gap-3">
+                        <button type="button" class="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700" id="cancelFilter">
+                            Batal
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium">
+                            Terapkan Filter
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+    // Simple filter modal toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const openBtn = document.getElementById('openFilterModal');
+        const modal = document.getElementById('filterModal');
+        const closeBtn = document.getElementById('closeFilterModal');
+        const cancelBtn = document.getElementById('cancelFilter');
+        
+        if (openBtn && modal) {
+            openBtn.addEventListener('click', function() {
+                modal.classList.remove('hidden');
+                modal.style.display = 'flex';
+            });
+        }
+        
+        if (closeBtn && modal) {
+            closeBtn.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            });
+        }
+        
+        if (cancelBtn && modal) {
+            cancelBtn.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            });
+        }
+        
+        // Click outside to close
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }
+        });
+    });
+    </script>
 </div>
 
 <!-- Detail Karyawan Modal (hanya sekali) -->

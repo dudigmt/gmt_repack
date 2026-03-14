@@ -6,6 +6,8 @@ from .models import Department, Position, Employee
 from django.urls import path
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from django.db import transaction
+from collections import defaultdict
 import pandas as pd
 from io import BytesIO
 
@@ -23,14 +25,76 @@ class DepartmentAdmin(ModelAdmin):
         urls = super().get_urls()
         custom_urls = [
             path('sync-departments/', self.admin_site.admin_view(self.sync_departments_view), name='sync-departments'),
+            path('sync-full/', self.admin_site.admin_view(self.sync_full_view), name='hr_department_sync_full'),
         ]
         return custom_urls + urls
     
+    def sync_full_view(self, request):
+        """View untuk sinkronisasi lengkap department + position"""
+        # 1. Sync Departments
+        dept_values = Employee.objects.exclude(dept__isnull=True).exclude(dept='').values_list('dept', flat=True).distinct()
+        
+        dept_created = 0
+        dept_map = {}
+        
+        for dept_name in dept_values:
+            dept, created = Department.objects.get_or_create(
+                name=dept_name,
+                defaults={
+                    'code': dept_name[:10].upper().replace(' ', '_').replace('|', '_'),
+                    'is_active': True
+                }
+            )
+            dept_map[dept_name] = dept
+            if created:
+                dept_created += 1
+        
+        # 2. Sync Positions berdasarkan department
+        pos_created = 0
+        pos_existing = 0
+        
+        # Kumpulkan semua kombinasi jabatan + department
+        data = Employee.objects.exclude(jabatan__isnull=True).exclude(jabatan='').exclude(dept__isnull=True).exclude(dept='').values_list('jabatan', 'dept').distinct()
+        
+        for jabatan, dept_name in data:
+            if dept_name in dept_map:
+                dept = dept_map[dept_name]
+                pos, created = Position.objects.get_or_create(
+                    title=jabatan,
+                    department=dept,
+                    defaults={
+                        'code': jabatan[:10].upper().replace(' ', '_').replace('|', '_'),
+                        'is_active': True
+                    }
+                )
+                if created:
+                    pos_created += 1
+                else:
+                    pos_existing += 1
+        
+        # 3. Update relasi employee
+        emp_updated = 0
+        for emp in Employee.objects.exclude(jabatan__isnull=True).exclude(jabatan='').exclude(dept__isnull=True).exclude(dept=''):
+            try:
+                pos = Position.objects.get(title=emp.jabatan, department__name=emp.dept)
+                if emp.position != pos:
+                    emp.position = pos
+                    emp.save()
+                    emp_updated += 1
+            except Position.DoesNotExist:
+                pass
+        
+        self.message_user(
+            request,
+            f"✅ SINKRONISASI LENGKAP SELESAI!\n"
+            f"   📁 Department: {dept_created} baru, {len(dept_map)-dept_created} existing\n"
+            f"   📌 Position: {pos_created} baru, {pos_existing} existing\n"
+            f"   👥 Employee: {emp_updated} diupdate"
+        )
+        return redirect('..')
+    
     def sync_departments_view(self, request):
         """View untuk sinkronisasi department dari data karyawan"""
-        from django.db import transaction
-        
-        # Ambil semua department unik dari field 'dept' di Employee
         dept_values = Employee.objects.exclude(dept__isnull=True).exclude(dept='').values_list('dept', flat=True).distinct()
         
         created_count = 0
@@ -52,13 +116,12 @@ class DepartmentAdmin(ModelAdmin):
         
         self.message_user(
             request, 
-            f"✅ Sinkronisasi selesai! {created_count} department baru dibuat, {existing_count} sudah ada"
+            f"✅ Sinkronisasi department selesai! {created_count} baru, {existing_count} sudah ada"
         )
         return redirect('..')
     
     def sync_departments_from_employees(self, request, queryset):
         """Action untuk sinkronisasi department dari data karyawan"""
-        # Ambil semua department unik dari field 'dept' di Employee
         dept_values = Employee.objects.exclude(dept__isnull=True).exclude(dept='').values_list('dept', flat=True).distinct()
         
         created_count = 0
@@ -126,17 +189,60 @@ class PositionAdmin(ModelAdmin):
         urls = super().get_urls()
         custom_urls = [
             path('sync-positions/', self.admin_site.admin_view(self.sync_positions_view), name='sync-positions'),
+            path('sync-by-dept/', self.admin_site.admin_view(self.sync_by_dept_view), name='position-sync-by-dept'),
         ]
         return custom_urls + urls
     
-    def sync_positions_view(self, request):
-        """View untuk sinkronisasi position dari data karyawan"""
-        from django.db import transaction
+    def sync_by_dept_view(self, request):
+        """Sinkronisasi position berdasarkan department yang ada"""
+        pos_created = 0
+        pos_existing = 0
         
-        # Ambil semua posisi unik dari field 'jabatan' di Employee
+        # Kumpulkan semua kombinasi jabatan + department
+        data = Employee.objects.exclude(jabatan__isnull=True).exclude(jabatan='').exclude(dept__isnull=True).exclude(dept='').values_list('jabatan', 'dept').distinct()
+        
+        for jabatan, dept_name in data:
+            try:
+                dept = Department.objects.get(name=dept_name)
+                pos, created = Position.objects.get_or_create(
+                    title=jabatan,
+                    department=dept,
+                    defaults={
+                        'code': jabatan[:10].upper().replace(' ', '_').replace('|', '_'),
+                        'is_active': True
+                    }
+                )
+                if created:
+                    pos_created += 1
+                else:
+                    pos_existing += 1
+            except Department.DoesNotExist:
+                pass
+        
+        # Update relasi employee
+        emp_updated = 0
+        for emp in Employee.objects.exclude(jabatan__isnull=True).exclude(jabatan='').exclude(dept__isnull=True).exclude(dept=''):
+            try:
+                pos = Position.objects.get(title=emp.jabatan, department__name=emp.dept)
+                if emp.position != pos:
+                    emp.position = pos
+                    emp.save()
+                    emp_updated += 1
+            except Position.DoesNotExist:
+                pass
+        
+        self.message_user(
+            request,
+            f"✅ SINKRONISASI POSITION SELESAI!\n"
+            f"   📌 Position: {pos_created} baru, {pos_existing} existing\n"
+            f"   👥 Employee: {emp_updated} diupdate"
+        )
+        return redirect('..')
+    
+    def sync_positions_view(self, request):
+        """View untuk sinkronisasi position dari data karyawan (default dept)"""
         pos_values = Employee.objects.exclude(jabatan__isnull=True).exclude(jabatan='').values_list('jabatan', flat=True).distinct()
         
-        # Ambil department default (pertama)
         default_dept = Department.objects.first()
         if not default_dept:
             self.message_user(request, "❌ Tidak ada department. Jalankan sinkronisasi department dulu!", level='ERROR')
@@ -162,16 +268,14 @@ class PositionAdmin(ModelAdmin):
         
         self.message_user(
             request, 
-            f"✅ Sinkronisasi selesai! {created_count} posisi baru dibuat, {existing_count} sudah ada"
+            f"✅ Sinkronisasi position selesai! {created_count} baru, {existing_count} sudah ada (semua di {default_dept.name})"
         )
         return redirect('..')
     
     def sync_positions_from_employees(self, request, queryset):
         """Action untuk sinkronisasi position dari data karyawan"""
-        # Ambil semua posisi unik dari field 'jabatan' di Employee
         pos_values = Employee.objects.exclude(jabatan__isnull=True).exclude(jabatan='').values_list('jabatan', flat=True).distinct()
         
-        # Ambil department default (pertama)
         default_dept = Department.objects.first()
         if not default_dept:
             self.message_user(request, "❌ Tidak ada department. Jalankan sinkronisasi department dulu!", level='ERROR')
@@ -248,21 +352,18 @@ class EmployeeAdmin(ModelAdmin):
     
     def update_department_from_dept(self, request, queryset):
         """Update relasi department dari field dept"""
-        from django.db import transaction
-        
         updated = 0
         not_found = []
         
-        with transaction.atomic():
-            for emp in queryset:
-                if emp.dept:
-                    try:
-                        dept = Department.objects.get(name=emp.dept)
-                        emp.department = dept
-                        emp.save()
-                        updated += 1
-                    except Department.DoesNotExist:
-                        not_found.append(emp.dept)
+        for emp in queryset:
+            if emp.dept:
+                try:
+                    dept = Department.objects.get(name=emp.dept)
+                    emp.department = dept
+                    emp.save()
+                    updated += 1
+                except Department.DoesNotExist:
+                    not_found.append(emp.dept)
         
         msg = f"✅ {updated} karyawan diupdate department-nya"
         if not_found:
@@ -272,21 +373,18 @@ class EmployeeAdmin(ModelAdmin):
     
     def update_position_from_jabatan(self, request, queryset):
         """Update relasi position dari field jabatan"""
-        from django.db import transaction
-        
         updated = 0
         not_found = []
         
-        with transaction.atomic():
-            for emp in queryset:
-                if emp.jabatan:
-                    try:
-                        pos = Position.objects.get(title=emp.jabatan)
-                        emp.position = pos
-                        emp.save()
-                        updated += 1
-                    except Position.DoesNotExist:
-                        not_found.append(emp.jabatan)
+        for emp in queryset:
+            if emp.jabatan:
+                try:
+                    pos = Position.objects.get(title=emp.jabatan)
+                    emp.position = pos
+                    emp.save()
+                    updated += 1
+                except Position.DoesNotExist:
+                    not_found.append(emp.jabatan)
         
         msg = f"✅ {updated} karyawan diupdate posisi-nya"
         if not_found:

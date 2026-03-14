@@ -72,7 +72,8 @@ def dashboard(request):
         'stats': stats,
         'employees_by_dept': employees_by_dept,
         'employees_by_status': employees_by_status,
-        'new_employees': new_employees_this_month,
+        'new_employees': new_employees_this_month[:10],
+        'new_employees_count': new_employees_this_month.count(),
         'total_departments': Department.objects.count(),
         'total_positions': Position.objects.count(),
     }

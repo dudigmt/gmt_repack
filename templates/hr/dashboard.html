@@ -12,8 +12,8 @@
         <p class="page-description">Ringkasan data karyawan aktif</p>
     </div>
 
-    <!-- Stat Cards - Sama persis dengan di employee_list -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Stat Cards - Beri margin bottom biar ga nempel -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- Total -->
         <div class="stat-card">
             <div class="flex items-center">
@@ -59,7 +59,7 @@
             </div>
         </div>
         
-        <!-- OS (Outsourcing) -->
+        <!-- OS -->
         <div class="stat-card">
             <div class="flex items-center">
                 <div class="stat-icon stat-icon-purple">
@@ -75,23 +75,23 @@
         </div>
     </div>
 
-    <!-- 2 Kolom: Chart dan Info -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Diagram Lingkaran (kiri) -->
-        <div class="card-glass p-6 lg:col-span-1">
-            <h3 class="text-lg font-semibold mb-4">Komposisi Karyawan</h3>
+    <!-- 2 Kolom: Komposisi Karyawan & Karyawan Baru -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Komposisi Karyawan (lebar 4 kolom) -->
+        <div class="card-glass p-6 lg:col-span-4">
+            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Komposisi Karyawan</h3>
             <div class="space-y-4">
                 {% for item in employees_by_status %}
                 <div>
                     <div class="flex justify-between text-sm mb-1">
-                        <span>
+                        <span class="text-gray-700 dark:text-gray-300">
                             {% if item.status_karyawan == 'tetap' %}Tetap
                             {% elif item.status_karyawan == 'kontrak' %}Kontrak
                             {% elif item.status_karyawan == 'os' %}OS
                             {% else %}{{ item.status_karyawan|title }}
                             {% endif %}
                         </span>
-                        <span class="font-medium">{{ item.count }}</span>
+                        <span class="font-medium text-gray-900 dark:text-white">{{ item.count }}</span>
                     </div>
                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div class="h-2 rounded-full 
@@ -109,19 +109,24 @@
             <!-- Ringkasan tambahan -->
             <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div class="flex justify-between text-sm">
-                    <span>Total Department</span>
-                    <span class="font-medium">{{ total_departments }}</span>
+                    <span class="text-gray-600 dark:text-gray-400">Total Department</span>
+                    <span class="font-medium text-gray-900 dark:text-white">{{ total_departments }}</span>
                 </div>
                 <div class="flex justify-between text-sm mt-2">
-                    <span>Total Posisi</span>
-                    <span class="font-medium">{{ total_positions }}</span>
+                    <span class="text-gray-600 dark:text-gray-400">Total Posisi</span>
+                    <span class="font-medium text-gray-900 dark:text-white">{{ total_positions }}</span>
                 </div>
             </div>
         </div>
         
-        <!-- 10 Karyawan Terbaru (kanan) -->
-        <div class="card-glass p-6 lg:col-span-2">
-            <h3 class="text-lg font-semibold mb-4">Karyawan Terbaru</h3>
+        <!-- Karyawan Baru Bulan Ini (lebar 8 kolom) -->
+        <div class="card-glass p-6 lg:col-span-8">
+            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+                Karyawan Baru Bulan Ini
+                <span class="text-sm font-normal text-gray-500 dark:text-gray-400 ml-2">
+                    ({{ new_employees_count }} orang)  <!-- Total semua, bukan cuma yang tampil -->
+                </span>
+            </h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead>
@@ -134,33 +139,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for emp in recent_employees %}
+                        {% for emp in new_employees %}
                         <tr class="border-t border-gray-200 dark:border-gray-700">
-                            <td class="py-2 text-sm">{{ emp.employee_id }}</td>
-                            <td class="py-2 text-sm">
+                            <td class="py-3 text-sm text-gray-800 dark:text-gray-200">{{ emp.employee_id }}</td>
+                            <td class="py-3 text-sm">
                                 <div class="flex items-center">
                                     <div class="avatar avatar-xs {{ emp.department|avatar_color }} mr-2">
                                         {{ emp|initials }}
                                     </div>
-                                    {{ emp.nama }}
+                                    <span class="text-gray-900 dark:text-white">{{ emp.nama }}</span>
                                 </div>
                             </td>
-                            <td class="py-2 text-sm">{{ emp.department.name|default:'-' }}</td>
-                            <td class="py-2 text-sm">
-                                <span class="badge-sm 
-                                    {% if emp.status_karyawan == 'tetap' %}badge-light-success
-                                    {% elif emp.status_karyawan == 'kontrak' %}badge-light-warning
-                                    {% elif emp.status_karyawan == 'os' %}badge-light-info
-                                    {% endif %}">
-                                    {{ emp.get_status_karyawan_display }}
+                            <td class="py-3 text-sm text-gray-800 dark:text-gray-200">{{ emp.department.name|default:'-' }}</td>
+                            <td class="py-3 text-sm">
+                                <span class="px-2 py-1 rounded-full text-xs 
+                                    {% if emp.status_karyawan == 'tetap' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
+                                    {% elif emp.status_karyawan == 'kontrak' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
+                                    {% elif emp.status_karyawan == 'os' %}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200
+                                    {% else %}bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300{% endif %}">
+                                    {% if emp.status_karyawan == 'tetap' %}Tetap
+                                    {% elif emp.status_karyawan == 'kontrak' %}Kontrak
+                                    {% elif emp.status_karyawan == 'os' %}OS
+                                    {% else %}{{ emp.status_karyawan|title }}
+                                    {% endif %}
                                 </span>
                             </td>
-                            <td class="py-2 text-sm">{{ emp.tgl_rekrut|date:"d M Y"|default:'-' }}</td>
+                            <td class="py-3 text-sm text-gray-800 dark:text-gray-200">{{ emp.tgl_rekrut|date:"d M Y"|default:'-' }}</td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5" class="py-8 text-center text-gray-500">
-                                Belum ada data karyawan baru
+                            <td colspan="5" class="py-8 text-center text-gray-500 dark:text-gray-400">
+                                Belum ada karyawan baru bulan ini
                             </td>
                         </tr>
                         {% endfor %}
@@ -168,30 +177,25 @@
                 </table>
             </div>
             <div class="mt-4 text-right">
-                <a href="{% url 'hr:employee_list' %}" class="text-sm text-blue-600 hover:underline">
+                <a href="{% url 'hr:employee_list' %}?sort=-tgl_rekrut" class="text-sm text-blue-600 hover:underline dark:text-blue-400">
                     Lihat semua karyawan →
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Sebaran Karyawan per Department - Grid Version dengan Status -->
+    <!-- Sebaran Karyawan per Department -->
     <div class="card-glass p-6">
         <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Sebaran Karyawan per Department</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for dept in employees_by_dept %}
             <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <!-- Nama Department -->
-                <div class="font-medium text-gray-900 dark:text-black mb-2">
+                <div class="font-medium text-gray-900 dark:text-white mb-2">
                     {{ dept.name }}
                 </div>
-                
-                <!-- Total -->
                 <div class="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                    Total: <span class="font-semibold text-gray-900 dark:text-black">{{ dept.total }}</span>
+                    Total: <span class="font-semibold text-gray-900 dark:text-white">{{ dept.total }}</span>
                 </div>
-                
-                <!-- Badge Status -->
                 <div class="flex flex-wrap gap-2">
                     {% if dept.tetap > 0 %}
                     <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs flex items-center">
