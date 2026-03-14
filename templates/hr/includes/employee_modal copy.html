@@ -1,0 +1,89 @@
+<!-- Modal Detail Karyawan -->
+<div id="employeeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 999999;">
+    <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 16px;">
+        <div style="background: white; border-radius: 8px; width: 100%; max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            
+            <!-- Header -->
+            <div style="background: #2563eb; color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0; font-size: 1.25rem;">Detail Karyawan</h3>
+                <button onclick="closeModal()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            
+            <!-- Body -->
+            <div style="padding: 20px;">
+                <!-- Loading -->
+                <div id="modalLoading" style="text-align: center; padding: 40px;">
+                    <div style="border: 4px solid #f3f3f3; border-top: 4px solid #2563eb; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 10px;"></div>
+                    <p style="color: #666;">Memuat data...</p>
+                </div>
+                
+                <!-- Content -->
+                <div id="modalContent" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
+
+<script>
+console.log('Modal script dimuat');
+
+function openModal(employeeId) {
+    console.log('openModal:', employeeId);
+    
+    const modal = document.getElementById('employeeModal');
+    const loading = document.getElementById('modalLoading');
+    const content = document.getElementById('modalContent');
+    
+    modal.style.display = 'block';
+    loading.style.display = 'block';
+    content.style.display = 'none';
+    
+    fetch('/hr/employees/' + employeeId + '/detail/')
+        .then(r => r.json())
+        .then(result => {
+            loading.style.display = 'none';
+            content.style.display = 'block';
+            
+            if (result.success) {
+                const d = result.data;
+                content.innerHTML = `
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr><td style="padding: 8px; font-weight: bold;">NIK</td><td style="padding: 8px;">${d.employee_id || '-'}</td></tr>
+                        <tr><td style="padding: 8px; font-weight: bold;">Nama</td><td style="padding: 8px;">${d.nama || '-'}</td></tr>
+                        <tr><td style="padding: 8px; font-weight: bold;">Department</td><td style="padding: 8px;">${d.department || '-'}</td></tr>
+                        <tr><td style="padding: 8px; font-weight: bold;">Posisi</td><td style="padding: 8px;">${d.position || '-'}</td></tr>
+                        <tr><td style="padding: 8px; font-weight: bold;">Status</td><td style="padding: 8px;">${d.status_karyawan || '-'}</td></tr>
+                        <tr><td style="padding: 8px; font-weight: bold;">No HP</td><td style="padding: 8px;">${d.no_hp || '-'}</td></tr>
+                        <tr><td style="padding: 8px; font-weight: bold;">Tgl Rekrut</td><td style="padding: 8px;">${d.tgl_rekrut || '-'}</td></tr>
+                    </table>
+                `;
+            } else {
+                content.innerHTML = '<p style="color: red;">Gagal memuat data</p>';
+            }
+        })
+        .catch(err => {
+            loading.style.display = 'none';
+            content.style.display = 'block';
+            content.innerHTML = '<p style="color: red;">Error: ' + err.message + '</p>';
+        });
+}
+
+function closeModal() {
+    document.getElementById('employeeModal').style.display = 'none';
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-nik]').forEach(el => {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openModal(this.dataset.nik);
+        });
+    });
+});
+</script>
